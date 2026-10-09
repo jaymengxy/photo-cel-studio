@@ -57,3 +57,17 @@
 | Verdict | NOT RUN |
 
 Check **RED→GREEN** for structural skill behavior. Visual quality is a separate manual assessment: agents must not turn an unrun case into a PASS.
+
+
+## Actual generation attempts — 2026-10-10
+
+**Test type:** exploratory ChatGPT image-edit tool call using the five user-attached street photos present in this conversation. **This was not a Codex runtime loading the installed Skill**; therefore it validates prompt-direction risks, not end-to-end Skill execution. No source images or generated result files were committed to GitHub.
+
+| Attempt | Requested / intended output | Observed output | Quality observation | Verdict |
+| --- | --- | --- | --- | --- |
+| V01 | S02 older-person bench photo as one standalone `quiet-dramatic` cel still | Tool returned a five-photo cel-styled comic/contact sheet instead | Strong graphic outlines and flat color separation; **wrong output cardinality**, original photo panel scaled down, extra foliage-cast shadows/stronger sunlight not in source | **FAIL** as independent single-image fidelity test |
+| V02 | Retry S02 with explicit one-photo/no-collage instructions | Tool again returned a five-photo montage | Persistent output-cardinality failure, original source images combined; hard-edged added tree-shadow shape changed illumination | **FAIL** as independent single-image fidelity test |
+
+**Follow-up changes:** added explicit `single source → one standalone frame / no collage` hard output contracts to `SKILL.md`, `references/prompt-construction.md`, and `references/quality-gates.md`. Added `no invented shadows` lighting checks. New unit tests `test_single_input_stays_one_frame_not_collage` and `test_lighting_not_reinvented_for_style` first failed (RED), then passed on CI after the rule changes. **These are instruction compliance checks, not proof an image model will obey.**
+
+**Unresolved/manual acceptance:** independent S02 and S03 reference-guided outputs, original vs generated face/pose/object QA, comparative baseline under the same Codex image-editing backend, master-lock targeted region edit, and all other category images remain **NOT RUN / NOT PASSED**. Once a suitable Codex image-generation connector is configured, test single-photo reference selection independently; reject any multi-panel output under default `single-frame` mode.
