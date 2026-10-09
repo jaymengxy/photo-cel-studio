@@ -154,6 +154,11 @@ class SkillContractTests(unittest.TestCase):
                       "atmosphere", "no image", "limitations"):
             self.assertIn(token, text)
 
+    def test_readme_explains_unmerged_branch_install(self):
+        text = read("README.md")
+        self.assertIn("git clone -b design/photo-cel-studio-v0.1", text)
+        self.assertIn("main", text)
+
     def test_no_fake_example_metadata(self):
         text = read("references/prompt-construction.md").lower()
         self.assertIn("no invented dates", text)
