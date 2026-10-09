@@ -38,4 +38,4 @@ source_map:
 5. Which light/weather cues are genuinely visible?
 6. Which failure would make the transformed picture factually wrong?
 
-Then route through the scene-mode registry and atmosphere registry independently. No artwork is produced at this stage.
+Then resolve one Cel Style Profile through `references/cel-era-profiles.md`, followed by independent scene-mode and atmosphere routing. An unspecified style remains mature-ova, regardless of source category; only explicit `cel_style_profile: auto` uses source cues for style routing. No artwork is produced at this stage.

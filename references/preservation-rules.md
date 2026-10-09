@@ -30,7 +30,7 @@ A style transformation changes the *rendering medium*, not the underlying real-w
 
 ### Conflicts and transformations
 
-- The priority order is user-approved master/source identity > preservation P0 > common cel art direction > mode > atmosphere.
+- The priority order is user-approved master/source identity > preservation P0/P1 > shared cel grammar > selected Cel Style Profile > Scene Mode > Atmosphere > decorative controls. A style switch, high profile intensity, cooler/warmer palette or analog finish cannot change identity colors, anatomy, event, count, camera, original illumination or weather.
 - If a user requests wholesale creative re-staging, disclose that the final image becomes **interpretation**, not a documentary-equivalent frame.
 - If the user expressly asks for snow on a sunny street, that is an allowed creative setting change, not observational automatic weather classification.
 
@@ -39,6 +39,8 @@ A style transformation changes the *rendering medium*, not the underlying real-w
 Activate **master-lock** when the user points to an **approved** output and asks “only change X” or “everything else unchanged.” Lock the accepted camera/crop, pose, arrangement, background, lighting, color system, shared visual grammar and identity. Specify the smallest target region and requested edit; do not treat the original source photo as permission to regenerate unrelated areas.
 
 Localized editing or masking is preferable when available, but prompt controls **cannot guarantee pixel-perfect** unchanged regions. Recheck the rest of the approved image; if significant drift occurs, flag it or decline a false precision claim rather than reporting a perfect edit.
+
+A different Cel Style Profile does not unlock an approved master under “only change X.” Keep its accepted palette, linework and finish outside X. If the user requests a full style comparison, treat it as a separately authorized new concept from the original photo; otherwise clarify an incompatible full-frame style request rather than regenerating unrelated regions.
 
 ## User-facing failure reporting
 

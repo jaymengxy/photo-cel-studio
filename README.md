@@ -1,6 +1,6 @@
 # photo-cel-studio
 
-**摄影瞬间 → 成熟手绘赛璐璐动画画面。** 将用户自己的照片转译为 1980–1990 年代日式手绘动画语法：清晰有分量的轮廓线、大面积平涂色块、硬边分层阴影和精心绘制的动画场景，同时保留人物、动物、车辆、建筑、重要物件、真实动作与镜头关系。
+**摄影瞬间 → 保真 → Cel Style Profile → Scene Mode → Atmosphere → 绘制 → 独立质量门。** v0.2 默认使用 `mature-ova`，以有分量的外轮廓、较轻的内部结构线、克制综合色、塑造体积的硬边平涂和传统背景美术，转译成熟赛璐璐动画画面。保留人物、动物、车辆、建筑、重要物件、真实动作与镜头关系，也可明确选择其他绘制风格。
 
 这个项目是一个供 Codex 等支持 Agent Skills 的环境读取的**视觉创作 Skill**，不是图片处理算法、滤镜、LUT 或独立图像生成模型。它必须配合一个**可用的图像编辑或生成工具**，才能真正输出图片。
 
@@ -22,7 +22,15 @@ git clone git@github.com:jaymengxy/photo-cel-studio.git ~/.codex/skills/photo-ce
 
 **注意：** Codex 中安装 Skill ≠ 自动安装图像生成工具。需要在当前环境配置支持参考图的图像编辑能力。若当前运行环境 **no image editing capability**，本 Skill 只能提供编辑任务书，不能声称已经生成了图像。
 
-### 当前 Draft PR 分支安装（合并 main 前请用此命令）
+### v0.2 开发分支安装（尚未合并 main）
+
+```bash
+git clone -b feat/photo-cel-studio-v0.2 git@github.com:jaymengxy/photo-cel-studio.git ~/.codex/skills/photo-cel-studio
+```
+
+已克隆的 Skill 目录中执行 `git fetch origin && git switch feat/photo-cel-studio-v0.2`，再重启 / 刷新会话。开发仓库 `~/Code/photo-cel-studio` 和安装目录是不同的副本；修改开发仓库不会自动更新已安装的 Skill。当前 v0.2 基于完整、未合并的 v0.1 分支开发，`main` 不包含这些能力。
+
+### 历史 v0.1 Draft PR 分支安装
 
 ```bash
 git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-studio.git ~/.codex/skills/photo-cel-studio
@@ -58,7 +66,75 @@ git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-stu
 
 ## 核心设计
 
-**全局视觉语法：** 有层次的深色轮廓、源图导出的平涂色块、清晰的硬边阴影、真实可信的人体/动物/机械结构，以及经过简化的手绘动画背景。输出默认**无文字、原图比例、保留镜头、适度风格化**。其他控制参数参见 `presets/default.yaml`。
+**共享绘制语法：** 有层次的轮廓、源图导出的平涂色块、2–3 个主要明暗色阶和塑造体积的硬边阴影、可信的人体/动物/机械结构，以及绘制出来的动画背景。共享层保持年代中性，具体线条性格、配色、年代感和介质处理由 Profile 决定。输出默认**无文字、原图比例、保留镜头、适度风格化**。
+
+**三层风格架构：**
+
+| 维度 | 每张输出选择 | 职责 / 注册表 |
+| --- | --- | --- |
+| Cel Style Profile | 恰好 1 个 | 年代、线条、色彩、明暗组织、背景绘制和介质；[Profile Registry](references/cel-era-profiles.md) |
+| Scene Mode | 恰好 1 个主模式；未知题材保留中性回退 | 题材的解剖、机械、建筑、动作与构图；[Mode Registry](references/scene-modes.md) |
+| Atmosphere Profiles | 0–2 个兼容项 | 原片可见的光线与天气；[Atmosphere Registry](references/atmosphere-selection.md) |
+
+**五种 Cel Style Profiles：**
+
+| ID | 可观察的绘制差异 |
+| --- | --- |
+| `mature-ova`（默认） | 较重外轮廓、较轻且有细微压力变化的结构线、克制的道路/天空/建筑综合色、塑造体积的硬边阴影、传统手绘背景和轻微模拟介质 |
+| `clean-modern-cel` | 更精确规律的线条、清晰明亮的源图色组、整洁的平涂边缘、默认无模拟颗粒；保留成熟比例 |
+| `urban-noir-cel` | 冷峻的次要色组、源光支持的更强明暗对比、较重轮廓和局部暗部融合；白天仍然是白天 |
+| `industrial-mecha-cel` | 机械连接、轮胎/前叉/发动机透视、负重体块和金属分面更明确；真实车辆不会变成机甲 |
+| `warm-daily-ova` | 温暖克制的日常综合色、自然表情、柔和收笔和稳定硬边明暗、具有生活感的手绘环境；不会默认幼态化 |
+
+**默认与自动的区别：** 没有指定风格时始终使用 `mature-ova`，汽车、摩托、宠物也一样。`scene_mode: auto` 只自动选择题材模式。只有明确指定 `cel_style_profile: auto`，才按 Profile Registry 的条件选择一个风格；普通车辆模式可以推荐工业对照，但不会自行替换默认风格。显式风格选择优先于自动路由。
+
+### v0.2 单图与风格对照
+
+默认单图：
+
+```text
+使用 $photo-cel-studio 转换这张摩托车街拍。
+保持黄色上衣、黑色头盔、摩托结构和骑手/橙白货车的原始关系，
+采用默认 mature-ova，保留日景，不添加雨、霓虹或新阴影。
+```
+
+明确选择现代风格：
+
+```text
+使用 $photo-cel-studio，cel_style_profile: clean-modern-cel，
+主模式 vehicle-mechanical，保留原图的车辆、人物和街道结构。
+```
+
+仅在希望风格随题材自动匹配时：
+
+```text
+使用 $photo-cel-studio，cel_style_profile: auto，scene_mode: auto。
+先说明最终选择的一个风格和一个主模式，再按原片光线处理。
+```
+
+同一原图的多风格对照：
+
+```text
+使用 $photo-cel-studio，将同一张摩托原图分别转换为 mature-ova、
+industrial-mecha-cel、clean-modern-cel。使用相同模型/编辑后端、输入比例、
+保真约束、主模式、氛围和构图，每个风格输出一张独立图片，不要拼贴。
+比较线条、机械结构、平涂明暗、配色、背景和介质，并分别报告保真与风格质量。
+```
+
+每次编辑都重新引用同一原图，不将前一个风格成品作为下一个输入。对照是明确请求多个独立成品；默认单图仍然只输出一个画面。模型版本或输入设置变化时需要重新控制条件，不能把差异全部归因于 Profile。Master Lock 中只改一处的请求，仍然锁定已接受的其他区域与风格。
+
+### v0.2 风格控制
+
+保留 v0.1 的十个默认字段，增加以下可选控制：
+
+| 字段 | 默认 | 意义与边界 |
+| --- | --- | --- |
+| `cel_style_profile` | `mature-ova` | 一个已注册 ID 或显式 `auto` |
+| `profile_intensity` | `medium` | `low` / `medium` / `high` 调整风格表达，不能降低保真优先级 |
+| `palette_character` | `restrained` | 调整次要综合色，不能覆盖服装、毛色、车漆等身份识别色 |
+| `surface_texture` | `subtle-analog` | `none` / `subtle-analog` / `moderate-analog`；介质纹理不能替代轮廓、平涂和阴影绘制 |
+
+显式选择其他 Profile 后，未指定控制采用该 Profile 的基底：例如现代风格为 `clear-bright` 配色和 `none` 表面纹理，Noir 为 `cool-restrained`，日常风格为 `warm-restrained`。默认 preset 不是用户显式覆盖；具体允许值及冲突处理见 [Profile Registry](references/cel-era-profiles.md)。
 
 **14 个主要场景模式（选择 1 个）：**
 
@@ -83,6 +159,13 @@ git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-stu
 
 **自动选择尊重证据：** 真实照片里没有雨、霓虹或落日时，不会自动捏造这些条件。用户可以明确要求改变天气或时代，但那是有意的再创作，不是忠实纪录转换。
 
+## Adding a profile / 扩展绘制风格
+
+1. 复制 [Profile 模板](templates/profile-template.md) 到 `profiles/<new-id>.md`，填写线条、色组、明暗、背景、人物/物体、介质、兼容性、保真边界、负面约束和可观察质量检查。
+2. 在 `references/cel-era-profiles.md` 增加注册记录和控制基底，声明适用条件、自动优先级、模式建议、氛围兼容和冲突处理。
+3. 增加契约与正向/反向图片场景，运行测试。既有五个 Profile 是最低覆盖；schema 检查会跟随注册表验证新增文件。
+4. 无需修改核心 `SKILL.md` 或 Prompt 工作流；Agent 只按需读取选中的 Profile。
+
 ## Adding a mode / 扩展新模式
 
 1. 复制 `templates/mode-template.md` 到 `modes/<new-mode>.md`，用新题材的具体边线、色彩、阴影、保真/禁止规则替换占位符。
@@ -100,12 +183,15 @@ git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-stu
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-详细的五张街拍照片场景、其他模式组合、手动图像评估表见 `tests/scenarios.md`。测试照片应保留在本地或当前会话，不要上传到公开代码仓库。
+详细的五张街拍场景、其他模式组合、v0.2 的 P01–P06 对照和手动评估表见 [tests/scenarios.md](tests/scenarios.md)。P01–P03 固定摩托原图、模型、比例和保真条件；P04 长椅老人、P05 宠物、P06 都市。此次没有提供可确认的这些原图，图片验收为 **NOT RUN**；v0.1 两次错误拼贴的 **FAIL** 记录保留。测试照片及成品保持私有，不上传到公开仓库。
+
+质量门分别报告 **Fidelity** 与 **Style Authenticity**。保真通过但仍是泛化现代数字插画，不能宣布 mature-ova 转换成功。文件结构测试验证指令契约，不证明模型遵循，也不证明五种风格已经达到预期艺术效果。
 
 ## Limitations / 已知限制
 
 - Skill 自身只提供决策和 prompt 结构，**no image output** without a connected image-edit model.
 - Prompt 无法保证像素级人物身份精度、局部像素锁定、读清模糊文字、被遮挡人数或生物计数。
+- 纯 Prompt 也无法保证特定画风与内容保真同时达到预期；可用模型、参考图接口和逐图视觉复查都会影响结果。
 - 成果必须视觉审核；通过文件结构测试不代表图片艺术质量测试已通过。
 - 不提供未经同意的新人物、天气、品牌、假地点或虚构文案。
 - 参考 80–90 年代成熟赛璐璐动画的通用视觉特性，不复刻具体动画作品角色、画面或其官方元素。
@@ -115,3 +201,5 @@ python3 -m unittest discover -s tests -p 'test_*.py' -v
 
 - [设计规范](docs/superpowers/specs/2026-10-10-photo-cel-studio-design.md)
 - [v0.1 开发计划](docs/superpowers/plans/2026-10-10-photo-cel-studio-v0.1.md)
+- [v0.2 设计规范](docs/superpowers/specs/2026-10-10-photo-cel-studio-v0.2-design.md)
+- [v0.2 开发计划与验证记录](docs/superpowers/plans/2026-10-10-photo-cel-studio-v0.2.md)

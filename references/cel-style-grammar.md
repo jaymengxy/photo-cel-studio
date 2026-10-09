@@ -1,19 +1,19 @@
 # Shared Cel Animation Drawing Grammar
 
-This file is a mandatory visual foundation for every mode. Reference the *general craft* of mature, hand-drawn late-20th-century Japanese cel-era animation; never copy an identifiable frame, studio design sheet, logo, or specific fictional character.
+This **era-neutral** file is the mandatory drawing foundation for every Scene Mode and selected Cel Style Profile. Profiles determine period character, palette bias, stroke regularity and medium finish; this shared grammar determines whether the image is cel-drawn at all. Never copy an identifiable frame, studio design sheet, logo or specific fictional character.
 
 ## Contour language
 
 - Draw clear dark/near-black ink contours, thicker for outer silhouette, thinner for internal construction and folds; taper where light hits.
 - Preserve recognizable faces, hair silhouettes, hands, garment seams, animals, mechanical details and architectural perspective.
 - Do not trace every tiny photographic texture. Let adjacent shapes, closed forms and line termination do the work.
-- Avoid uniform vector outlines, heavy all-over “comic filter,” sketchy indecisive strokes and hyper-detailed cross-hatching.
+- Keep an outer/inner hierarchy even when the selected profile calls for precise regular strokes. Avoid heavy all-over “comic filter,” sketchy indecisive strokes and hyper-detailed cross-hatching. Hand-ink irregularity is profile-specific, not mandatory in every style.
 
 ## Color and material
 
 - Replace photo gradients with deliberate **flat color areas**. Use source-derived base colors, coherent shadows and selected graphic accents.
 - Use generally 2–3 values per material (base + one shadow + optional highlight), simplifying without erasing identity-marking hues.
-- Keep vivid colors selective: balanced defaults are not oversaturated anime candy. Strong contrast is chiefly **value design**, not universal neon.
+- Preserve identity-defining hues and source value relationships. The selected profile controls secondary saturation and warm/cool grouping; do not impose one muted or bright palette on every profile. Strong contrast is chiefly **value design**, not universal neon.
 - Allow painted background atmospherics only where optical depth or the selected atmosphere warrants them. Characters remain visibly cel-shaded.
 
 ## Graphic lighting
@@ -32,6 +32,6 @@ This file is a mandatory visual foundation for every mode. Reference the *genera
 
 ## Finish and exclusions
 
-Target an authored **anime film still**, not a photo-plus-texture overlay, not watercolor, not an acrylic painting, not a 3D/PBR render, not a generic bright mobile-game illustration. Subtle analog-era grain can soften an overly digital surface, but should not replace thoughtful linework and paint separations.
+Target an authored **cel animation still**, not a photo-plus-texture overlay, watercolor, acrylic painting, 3D/PBR render or generic mobile-game filter. Surface texture is an optional profile/control decision; clean plates with no grain must still read as drawn cel animation. Texture cannot replace thoughtful ink, flat fills, volume-building shadows or painted backgrounds.
 
-**Shared series lock:** keep similar contour weight, shadow steps, saturation restraint, background paint language and finishing texture, while adapting the subject's true palette and content to each scene.
+**Shared series lock:** keep the selected profile's contour family, shadow steps, palette strategy, background paint language and surface treatment while adapting the source's true colors/content. Explicit multi-profile comparisons vary those profile traits intentionally and keep preservation/non-style settings fixed.

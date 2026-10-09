@@ -4,6 +4,12 @@ Choose **exactly one primary scene mode** by the most important *art-direction c
 
 Read `references/source-analysis.md` and preservation anchors first. The core cel visual DNA overrides all mode-specific aesthetics. Load only the **one chosen** mode file **on demand**.
 
+## Independent style and subject dimensions
+
+Scene Mode and **Cel Style Profile** are **independent**: Mode decides subject-specific anatomy, geometry, acting and composition; Profile decides era, line character, palette hierarchy, shadow organization and medium finish. `references/cel-era-profiles.md` owns style registration and selection. Ordinary mode routing **does not select or replace** a style, override an explicit user profile or activate `cel_style_profile: auto`.
+
+Apply each mode's line/palette/background advice within the selected profile. Bright clothing in youth-energetic is a source accent, not permission to override mature-ova with a uniformly bright modern palette. A motorcycle may choose vehicle-mechanical while keeping the default mature-ova; industrial-mecha-cel is a recommendation until explicitly chosen or auto style routing is authorized.
+
 | Mode ID | File | Common source cues | First exclusion check |
 | --- | --- | --- | --- |
 | `urban-cinematic` | [modes/urban-cinematic.md](../modes/urban-cinematic.md) | street furniture, crosswalks, vendors, benches, context-rich pedestrians, layered city depths | No default futuristic city |
@@ -35,10 +41,12 @@ Read `references/source-analysis.md` and preservation anchors first. The core ce
 
 If no mode matches the actual photo type, use a **neutral fallback**: source-driven cel visual grammar, restrained flat shading, truthful anchor preservation; never force a possibly wrong preset.
 
+The fallback is a neutral subject treatment, not a reset of the selected style. Its palette/finish still follows the selected Cel Style Profile. Keep the existing fallback rather than inventing a new registered Mode ID.
+
 Adding new coverage means making a new `modes/<id>.md` file from `templates/mode-template.md`, registering one new row above, and adding tests/fixtures to `tests/scenarios.md`, **without editing** root `SKILL.md`. Existing modes remain valid.
 
 When two modes overlap, pick the one with greater source-specific fidelity requirements. Do not stack two scene modes. If the user selects an explicit mode, obey it unless that would break P0 anchors; explain the conflict rather than silently replacing the subject.
 
 ## Series consistency
 
-Keep shared contours, number of shadow steps and background finish consistent; different scenes may select distinct modes and source palettes. Atmosphere is a separate optional stage, not a scene category.
+Keep one Cel Style Profile and its resolved contours, shadow steps and background finish consistent unless per-image styles are explicitly requested; different scenes may select distinct modes and source palettes. Atmosphere is a separate optional stage, not a scene category or era/style preset.

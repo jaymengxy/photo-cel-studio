@@ -8,3 +8,7 @@ aspect_ratio: original
 typography: none
 output: single-frame
 revision_mode: new-concept
+cel_style_profile: mature-ova
+profile_intensity: medium
+palette_character: restrained
+surface_texture: subtle-analog

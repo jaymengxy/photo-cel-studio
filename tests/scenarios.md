@@ -47,6 +47,7 @@
 | Model + tool | |
 | Skill revision / SHA | |
 | Selection (mode + atmospheres) | |
+| Cel Style Profile + resolved intensity/palette/surface | |
 | Prompt or brief (private/local) | |
 | Without-skill baseline result | NOT RUN |
 | With-skill result | NOT RUN |
@@ -54,6 +55,7 @@
 | Cel authenticity / anatomy / composition, 0–2 | |
 | Atmosphere grounding / series coherence, 0–2 | |
 | Hard failures & corrections | |
+| Fidelity verdict / Style verdict | NOT RUN / NOT RUN |
 | Verdict | NOT RUN |
 
 Check **RED→GREEN** for structural skill behavior. Visual quality is a separate manual assessment: agents must not turn an unrun case into a PASS.
@@ -71,3 +73,52 @@ Check **RED→GREEN** for structural skill behavior. Visual quality is a separat
 **Follow-up changes:** added explicit `single source → one standalone frame / no collage` hard output contracts to `SKILL.md`, `references/prompt-construction.md`, and `references/quality-gates.md`. Added `no invented shadows` lighting checks. New unit tests `test_single_input_stays_one_frame_not_collage` and `test_lighting_not_reinvented_for_style` first failed (RED), then passed on CI after the rule changes. **These are instruction compliance checks, not proof an image model will obey.**
 
 **Unresolved/manual acceptance:** independent S02 and S03 reference-guided outputs, original vs generated face/pose/object QA, comparative baseline under the same Codex image-editing backend, master-lock targeted region edit, and all other category images remain **NOT RUN / NOT PASSED**. Once a suitable Codex image-generation connector is configured, test single-photo reference selection independently; reject any multi-panel output under default `single-frame` mode.
+
+## v0.2 — Profile comparison matrix (2026-10-10)
+
+These are new acceptance cases, not new generation results. No unambiguously identified source originals for this matrix were supplied with the v0.2 coding request or committed in this repository. This session has a reference-image editing capability, but the required test source images are not established. **All six image tests are NOT RUN**; no stand-in picture, text reconstruction or collage can establish PASS.
+
+| Case | Source | Scene Mode | Cel Style Profile | Image result |
+| --- | --- | --- | --- | --- |
+| P01 | Motorcycle street photo: yellow top, black helmet, orange/white truck | vehicle-mechanical | mature-ova | NOT RUN |
+| P02 | The identical motorcycle original as P01 | vehicle-mechanical | industrial-mecha-cel | NOT RUN |
+| P03 | The identical motorcycle original as P01 | vehicle-mechanical | clean-modern-cel | NOT RUN |
+| P04 | Bench elder original (S02) | quiet-dramatic | mature-ova | NOT RUN |
+| P05 | User's pet photo | pet-character | warm-daily-ova | NOT RUN |
+| P06 | User's city street photo | urban-cinematic | urban-noir-cel | NOT RUN |
+
+### Fixed comparison conditions
+
+P01, P02 and P03 must use the **same source**, **same model** and reference-image editing backend/version, **same input ratio**, **same preservation** contract, camera/crop, scene mode, atmosphere selection and non-style controls. Fix seed if supported and record when it is not. Reattach the same original for every call, not a previous generated variant. Record actual ratio/model/settings before editing; they are currently NOT RUN / unset, not invented values. If backend/model changes, rerun the three as one comparable set. Only profile and declared profile-derived rendering controls vary.
+
+Output one independent still per profile. A separately requested display contact sheet cannot count as single-image acceptance; inspect the underlying independent artifacts. Keep sources, full prompts, model outputs and local file paths outside public Git history.
+
+### What to inspect
+
+- **P01 mature vs v0.1:** weighted exterior/lighter structural ink with restrained hand variation; modeled Base / Shadow / Highlight; quieter sky/road/architecture around the original yellow/orange identity accents; credible painted city and faint medium texture. The v0.1 motorcycle result is reported by the owner but not locally available in this coding session; improvement versus it is NOT RUN until both outputs can be inspected under documented comparable conditions.
+- **P02 industrial vs P01:** correct wheel ellipses/contact, front fork, handlebar/grips, engine block, frame, headlight, suspension and shared mechanical perspective; more explicit load-bearing ink/angular metal planes without added parts, robots or PBR shine.
+- **P03 modern vs P01:** steadier contours, clearer/brighter source palette, cleaner paint edges and minimal/no simulated grain; keep mature anatomy and hard cel shadows, no cheap cartoon filter.
+- **Across P01–P03:** rider pose/count, helmet/clothes, motorcycle and truck/car/building/palm/signal/road-marking relations remain recognizable. Report fidelity drift separately from line/color/shadow/background/finish differences.
+- **P04:** same elder age/face, hands-to-backpack action and bench/thermos/cup/hat relationship; no new foliage shadows or collage.
+- **P05:** original pet species/breed, coat, eyes/ears/paws, pose and expression; restrained warmth, no kawaii or invented light.
+- **P06:** noir color/contrast without converting a dry daylight street into night, rain or neon; retain street geography and people.
+
+Each run records separate Fidelity and Style verdicts with observed evidence. Fidelity PASS is insufficient for overall PASS. Cross-profile distinctiveness remains NOT RUN until comparable outputs exist.
+
+### Routing / control pressure cases
+
+| Input/request | Expected behavior | Evidence type |
+| --- | --- | --- |
+| Motorcycle + unspecified style + scene_mode auto | mature-ova + vehicle-mechanical; industrial only a recommendation | Agent brief + image review |
+| Same motorcycle + cel_style_profile auto | One registry-resolved industrial style; same preservation | Agent brief + image review |
+| Bright motorcycle + explicit clean-modern | Cleaner/brighter color groups, baseline surface none; no default analog contamination | Agent brief + image review |
+| Dry daylight city + explicit noir | Daytime, dry surfaces and observed light stay intact | Agent brief + image review |
+| Pet + unspecified style | mature-ova, not automatic warm-daily | Agent brief + image review |
+| High intensity + yellow shirt/orange truck | Stronger drawing hierarchy, identity hues preserved | Agent brief + image review |
+| Unknown profile ID / two stacked styles | Clarify one profile or request separate comparison; no silent replacement | Agent brief |
+| Unknown scene category + explicit style | Neutral subject fallback keeps the selected profile | Agent brief |
+| Approved master + only change headlight + new style preference | Keep accepted unrelated regions/style; clarify incompatible full redraw | Agent brief + local-edit review |
+
+### Requirements to run the image matrix
+
+Provide or identify the exact private motorcycle original for P01–P03, bench elder original for P04, pet photo for P05 and city-street photo for P06, plus the v0.1 motorcycle output for historical comparison. Use a reference-image editing tool with controllable model/version and ratio; inspect each returned image against its original. No repository upload is needed. Generation and visual QA have not been performed by the v0.2 structural suite.

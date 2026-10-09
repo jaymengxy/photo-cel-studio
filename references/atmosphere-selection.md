@@ -2,6 +2,8 @@
 
 Photo Cel Studio chooses **zero profiles** when the reference photo lacks relevant lighting or weather. In automatic selection, **source evidence** is mandatory and **no invented** rain, sun, neon, haze, snow, lens flares or time change is permitted. Atmosphere profiles modify drawing of observed light; a profile never becomes a primary scene mode.
 
+These are **Atmosphere Profiles**, distinct from the one **Cel Style Profile** in `references/cel-era-profiles.md`. Style controls drawing era/palette/finish; atmosphere describes observed environmental light/weather. Noir never supplies evidence of night, warm-daily never supplies evidence of sunset, and industrial never supplies evidence of neon. Apply atmospheric hues locally within the selected style while preserving actual light colors, geometry and compatibility.
+
 | Profile | File | Positive source evidence |
 | --- | --- | --- |
 | `neon-night` | [atmospheres/neon-night.md](../atmospheres/neon-night.md) | Dark sky/night exposure, localized red/blue/green light pools, signs, cast colored light. |

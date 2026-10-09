@@ -4,6 +4,7 @@ These tests verify documentation contracts, not image-generation quality.
 Actual image edits must be evaluated with tests/scenarios.md.
 """
 from pathlib import Path
+from fnmatch import fnmatchcase
 import re
 import unittest
 
@@ -30,7 +31,21 @@ DEFAULTS = {
     "typography": "none",
     "output": "single-frame",
     "revision_mode": "new-concept",
+    "cel_style_profile": "mature-ova",
+    "profile_intensity": "medium",
+    "palette_character": "restrained",
+    "surface_texture": "subtle-analog",
 }
+PROFILES = (
+    "mature-ova", "clean-modern-cel", "urban-noir-cel",
+    "industrial-mecha-cel", "warm-daily-ova",
+)
+PROFILE_HEADINGS = (
+    "Profile ID", "When to use", "Visual intent", "Linework", "Color palette",
+    "Shadow grammar", "Background painting", "Character and object treatment",
+    "Material / analog finish", "Compatible Scene Modes", "Atmosphere compatibility",
+    "Preservation guardrails", "Negative constraints", "Quality checks",
+)
 MODE_HEADINGS = (
     "When to use", "Source cues", "Composition strategy", "Linework", "Palette",
     "Shadow grammar", "Background policy", "Preservation guardrails",
@@ -54,6 +69,181 @@ def headings(text: str):
 
 
 class SkillContractTests(unittest.TestCase):
+    def test_ci_covers_v02_development_branch(self):
+        workflow = read(".github/workflows/validate-skill.yml")
+        branch_list = re.search(r"(?m)^\s+branches:\s*\[(.+)\]\s*$", workflow)
+        self.assertIsNotNone(branch_list)
+        patterns = [value.strip().strip('\"\'') for value in branch_list.group(1).split(',')]
+        for branch in ("main", "design/photo-cel-studio-v0.1", "feat/photo-cel-studio-v0.2"):
+            self.assertTrue(any(fnmatchcase(branch, pattern) for pattern in patterns), branch)
+
+    def test_default_profile_is_mature_ova(self):
+        preset = read("presets/default.yaml")
+        self.assertRegex(preset, r"(?m)^cel_style_profile: mature-ova$")
+        registry = read("references/cel-era-profiles.md").lower()
+        self.assertIn("unspecified", registry)
+        self.assertIn("mature-ova", registry)
+        self.assertIn("including vehicles", registry)
+
+    def test_profile_registry_exists(self):
+        registry = read("references/cel-era-profiles.md")
+        self.assertIn("references/cel-era-profiles.md", read("SKILL.md"))
+        for field in ("Profile ID", "File", "Suitable scenes", "Visual target",
+                      "Auto priority", "Scene Mode pairing", "Atmosphere compatibility",
+                      "Conflict handling"):
+            self.assertIn(field, registry)
+
+    def test_five_profiles_exist(self):
+        registry = read("references/cel-era-profiles.md")
+        for profile in PROFILES:
+            with self.subTest(profile=profile):
+                read(f"profiles/{profile}.md")
+                self.assertIn(f"profiles/{profile}.md", registry)
+
+    def test_skill_requires_exactly_one_profile(self):
+        entry = read("SKILL.md").lower()
+        self.assertIn("exactly one cel style profile", entry)
+        self.assertIn("profiles/<id>.md", entry)
+        self.assertIn("on demand", entry)
+        self.assertIn("only the selected", entry)
+
+    def test_profile_schema_consistency(self):
+        registry = read("references/cel-era-profiles.md")
+        registered = set(re.findall(r"profiles/([a-z0-9-]+)\.md", registry))
+        self.assertTrue(set(PROFILES).issubset(registered))
+        for profile in sorted(registered):
+            body = read(f"profiles/{profile}.md")
+            with self.subTest(profile=profile):
+                self.assertIn(f"# {profile}\n", body)
+                self.assertTrue(set(PROFILE_HEADINGS).issubset(headings(body)))
+                for heading in PROFILE_HEADINGS:
+                    section = re.search(rf"(?ms)^## {re.escape(heading)}\n(.+?)(?=^## |\Z)", body)
+                    self.assertIsNotNone(section, heading)
+                    self.assertTrue(section.group(1).strip(), heading)
+                self.assertNotRegex(body, r"\b(?:TBD|TODO)\b|\[Insert|<profile-id>")
+        self.assertTrue(set(PROFILE_HEADINGS).issubset(headings(read("templates/profile-template.md"))))
+
+    def test_profile_registry_is_extensible(self):
+        registry = read("references/cel-era-profiles.md")
+        for token in ("profiles/<id>.md", "templates/profile-template.md", "registry row",
+                      "tests", "without editing", "SKILL.md"):
+            self.assertIn(token, registry)
+        # Future IDs are resolved from the registry, not an entrypoint enumeration.
+        entry = read("SKILL.md")
+        for profile in PROFILES[1:]:
+            self.assertNotIn(profile, entry)
+
+    def test_vehicle_mode_mentions_profile_recommendation(self):
+        mode = read("modes/vehicle-mechanical.md").lower()
+        for token in ("mature-ova", "industrial-mecha-cel", "recommend", "explicit",
+                      "wheel geometry", "front fork", "handlebar", "engine block",
+                      "frame structure", "headlight", "suspension", "mechanical perspective"):
+            self.assertIn(token, mode)
+
+    def test_negative_constraints_block_modern_glossy_anime(self):
+        mature = read("profiles/mature-ova.md").lower()
+        for token in ("avoid glossy modern anime rendering", "tourism-poster",
+                      "chibi", "digital gradients", "plastic", "lens flare"):
+            self.assertIn(token, mature)
+
+    def test_profile_does_not_override_source_preservation(self):
+        entry = read("SKILL.md").lower()
+        precedence = entry.split("## decision precedence", 1)[1]
+        self.assertIn("selected cel style profile", precedence)
+        self.assertLess(precedence.index("p0"), precedence.index("selected cel style profile"))
+        for profile in PROFILES:
+            with self.subTest(profile=profile):
+                text = read(f"profiles/{profile}.md").lower()
+                for token in ("p0", "identity", "light direction", "master-lock"):
+                    self.assertIn(token, text)
+
+    def test_scene_mode_and_profile_are_independent(self):
+        scene = read("references/scene-modes.md").lower()
+        for token in ("cel style profile", "independent", "does not select or replace"):
+            self.assertIn(token, scene)
+        registry = read("references/cel-era-profiles.md").lower()
+        self.assertIn("cel_style_profile: auto", registry)
+        self.assertIn("explicit", registry)
+        self.assertIn("recommendations do not change", registry)
+
+    def test_v01_scene_modes_and_atmospheres_remain_registered(self):
+        modes = set(re.findall(r"modes/([a-z-]+)\.md", read("references/scene-modes.md")))
+        atmospheres = set(re.findall(r"atmospheres/([a-z-]+)\.md", read("references/atmosphere-selection.md")))
+        self.assertTrue(set(MODES).issubset(modes))
+        self.assertTrue(set(ATMOSPHERES).issubset(atmospheres))
+        self.assertEqual(len(MODES), 14)
+        self.assertEqual(len(ATMOSPHERES), 6)
+
+    def test_prompt_assembly_has_profile_in_order(self):
+        prompt = read("references/prompt-construction.md")
+        sections = re.findall(r"^### [1-6]\. (.+)$", prompt, re.M)
+        self.assertEqual(sections, [
+            "Source Description", "Preservation Contract", "Shared Cel Grammar",
+            "Selected Cel Style Profile", "Selected Scene Mode + Atmosphere",
+            "Composition / Background / Negative Constraints",
+        ])
+
+    def test_shared_grammar_is_era_neutral(self):
+        grammar = read("references/cel-style-grammar.md").lower()
+        self.assertIn("era-neutral", grammar)
+        self.assertIn("selected cel style profile", grammar)
+        self.assertIn("2–3", grammar)
+        for obsolete in ("late-20th-century", "subtle analog-era grain", "saturation restraint"):
+            self.assertNotIn(obsolete, grammar)
+
+    def test_profile_controls_are_bounded(self):
+        registry = read("references/cel-era-profiles.md").lower()
+        for token in ("profile_intensity", "palette_character", "surface_texture",
+                      "identity colors", "does not change preservation priority",
+                      "cannot replace", "profile-specific baseline", "low", "medium", "high"):
+            self.assertIn(token, registry)
+
+    def test_style_authenticity_gate_is_independent(self):
+        gate = read("references/quality-gates.md").lower()
+        self.assertIn("style authenticity gate", gate)
+        self.assertIn("fidelity verdict", gate)
+        self.assertIn("style verdict", gate)
+        for token in ("line hierarchy", "2–3", "selected profile", "analog", "poster", "background"):
+            self.assertIn(token, gate)
+
+    def test_profile_comparison_uses_independent_frames(self):
+        prompt = read("references/prompt-construction.md").lower()
+        for token in ("same source", "same model", "same input ratio", "same preservation",
+                      "one independent frame per profile", "previous variant", "master-lock"):
+            self.assertIn(token, prompt)
+
+    def test_noir_does_not_invent_night(self):
+        noir = read("profiles/urban-noir-cel.md").lower()
+        self.assertIn("daytime stays daytime", noir)
+        self.assertIn("no invented night", noir)
+        self.assertIn("rain", noir)
+        self.assertIn("neon", noir)
+
+    def test_industrial_profile_keeps_real_vehicle(self):
+        industrial = read("profiles/industrial-mecha-cel.md").lower()
+        for token in ("wheel geometry", "front fork", "handlebar", "engine block",
+                      "frame structure", "headlight", "suspension", "mechanical perspective",
+                      "robots", "pbr"):
+            self.assertIn(token, industrial)
+
+    def test_modern_profile_has_distinct_finish(self):
+        modern = read("profiles/clean-modern-cel.md").lower()
+        for token in ("precise", "brighter", "minimal", "texture", "mature", "outer", "inner"):
+            self.assertIn(token, modern)
+
+    def test_v02_image_scenarios_are_truthful(self):
+        scenarios = read("tests/scenarios.md")
+        for case in ("P01", "P02", "P03", "P04", "P05", "P06"):
+            self.assertRegex(scenarios, rf"(?m)^\| {case} \|.*NOT RUN")
+        for token in ("same source", "same model", "same input ratio", "same preservation"):
+            self.assertIn(token, scenarios.lower())
+
+    def test_readme_documents_v02_profile_usage(self):
+        readme = read("README.md")
+        for token in (*PROFILES, "cel_style_profile: auto", "feat/photo-cel-studio-v0.2",
+                      "Adding a profile", "profile_intensity", "surface_texture"):
+            self.assertIn(token, readme)
+
     def test_entrypoint_has_valid_frontmatter(self):
         text = read("SKILL.md")
         self.assertRegex(text, r"\A---\n[\s\S]+?\n---\n")
