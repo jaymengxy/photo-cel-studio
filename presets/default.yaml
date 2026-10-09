@@ -1,0 +1,10 @@
+style_strength: balanced
+identity_lock: high
+background_policy: simplify
+composition_policy: source-guided
+scene_mode: auto
+atmosphere_profiles: auto
+aspect_ratio: original
+typography: none
+output: single-frame
+revision_mode: new-concept
