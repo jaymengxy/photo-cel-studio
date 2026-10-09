@@ -1,6 +1,6 @@
 # Photo Cel Studio — Design Spec v0.1
 
-**Status:** DRAFT — pending owner review before implementation  
+**Status:** DESIGN APPROVED — 14 scene modes + 6 atmosphere profiles; implementation plan still under review  
 **Target:** Codex-compatible, model-agnostic Agent Skill  
 **Repository:** jaymengxy/photo-cel-studio  
 **Date:** 2026-10-10
@@ -9,12 +9,12 @@
 
 Photo Cel Studio transforms user-supplied **real photographs** into authored **hand-drawn cel-animation-looking images** inspired by the general visual language of 1980s–1990s mature Japanese animation. The primary output should be an image that looks like **a frame from an animated production**, not an anime selfie filter, generic digital illustration, or unchanged photo with a painted overlay.
 
-Use cases: street/documentary photography, portraits, people interacting, animals/objects, public spaces, architecture, and grouped image series.
+Use cases: street/documentary photography, portraits and groups, natural landscapes, pets and wildlife, vehicles, architecture, food, macro close-ups, interiors, everyday objects, atmospheric weather/night scenes, and cohesive photo series.
 
 The defining balance is:
 - Preserve people, animals, key objects, actions, relationships, and documentary narrative.
 - Translate contours, color masses, shadows, depth cues, and environments into intentionally designed cel-animation grammar.
-- Let source content select a suitable **scene mode** without making every photo follow the same template.
+- Let source content select a suitable **scene mode** and compatible **atmosphere profile(s)** without making every photo follow the same template.
 - Support single-frame transformation, coherent series, and exact-scope revisions to approved outputs.
 
 **Success:** viewers immediately recognize the photograph's essential event and see convincing, mature, production-like cel animation: well-designed shapes, clear black outlines, flat colors, coherent stepped shadows, and an intentional anime background.
@@ -23,7 +23,7 @@ The defining balance is:
 
 ### In v0.1
 - Analyze one photograph and produce a concise source map and preservation contract.
-- Choose one primary scene mode from a documented list; allow explicit user overrides.
+- Choose one primary scene mode from a 14-mode registry and 0–2 compatible atmosphere profiles from a separate six-profile library; allow explicit user overrides.
 - Build a structured edit brief and call an available image-edit/generation tool.
 - Inspect the result and revise on substantial deviations if tool capabilities allow.
 - Support a series consistency contract across several related images.
@@ -70,29 +70,67 @@ Build a compact internal Source Map before prompt construction:
 
 **Do not imply original-photo identity can always be reproduced exactly.** Use an actual image reference/edit operation when available rather than text-only reconstruction.
 
-## 5. Scene modes (select exactly one primary)
+## 5. Scene modes — fourteen primary directions
 
-| Mode | When to use | Art direction | Specific guardrail |
+Choose **exactly one primary scene mode** for an image. All modes share the same cel visual DNA. The original six are retained to preserve previously approved behavior, and eight new high-frequency photo categories are added.
+
+| Mode | Source-specific cues / when to use | Art direction | Preservation / negative constraint |
 | --- | --- | --- | --- |
-| `urban-cinematic` | street, park, everyday urban documentary | mature anime film still, careful background perspective, restrained palette, graphic shadows | don't arbitrarily transform the scene into sci-fi |
-| `quiet-dramatic` | solo subjects, stillness, waiting, reflective moments | sparse detail, controlled negative space, subtle emotional acting, large light/shadow masses | don't change the subject's gesture or expression |
-| `dynamic-action` | running, play, movement, decisive moments | action-keyframe energy, directionality, forceful pose silhouettes, tighter value grouping | don't invent new gestures, people, speed lines by default |
-| `youth-energetic` | candid children, friendly interactions and play | brighter clear accent colors, expressive but believable acting | maintain age, dignity, and actual interaction |
-| `sci-fi-industrial` | existing machines, infrastructure, geometric cityscapes | hard perspective, mechanical/architectural mark making, controlled industrial lighting | sci-fi conversion/invented tech only if user requests |
-| `everyday-still-life` | pets, fish, food, small objects, close-up everyday observations | elegant silhouette, simplified object shapes, source-derived flat palette and hard-edged accents | don't add animals/objects or convert real anatomy into generic cartoon icons |
+| `urban-cinematic` | street, parks, public spaces, observed everyday life | designed streetscape, strong eye path, mature cinematic cel frame | do not inject sci-fi architecture or rewrite the location |
+| `quiet-dramatic` | lone person, waiting, stillness, introspective gesture | selective negative space, large light/shadow masses, subtle character acting | protect expression, posture, and human-object interaction |
+| `dynamic-action` | running, play, movement, sports or dance decisive moment | readable action silhouette, directionality, key-frame staging | preserve the actual action; no invented speed lines by default |
+| `youth-energetic` | candid children and lighthearted social interaction | lively but believable expressive acting, bright restrained accents | preserve real age, dignity, count and interaction |
+| `sci-fi-industrial` | machinery and infrastructure with industrial geometry, *or* user-requested conceptual futurism | mechanical/architectural perspective, crisp shadow plates | do not manufacture science-fiction tech from an ordinary photograph without request |
+| `everyday-still-life` | small everyday objects and simple intimate still lifes, including fish in container | elegant silhouette, efficient flat-color masses, restrained background | retain number and anatomy of animals when present; prefer specialist modes where applicable |
+| `landscape-cinematic` | mountains, sea, lakes, forest, sky, geological vistas | layered cel-era painted background, readable horizon, grouped clouds/foliage | retain distinctive terrain, skyline, landmarks and geographic character |
+| `pet-character` | cats, dogs, domestic animals, pet portraits and interactions | cel-drawn believable anatomy, expressive but authentic faces, sparse fur detail | preserve species/breed cues, markings, size, eye/ear features; no default anthropomorphism |
+| `vehicle-mechanical` | cars, motorcycles, bicycles, trains and transport close-ups | crisp mechanical silhouette, credible perspective, hard-edge paint reflections | preserve model-identifying geometry, components, wheels, viewpoint; no unwanted redesign |
+| `architecture-graphic` | exteriors, stairs, corridors, stations, bridges, details | clean structural lines, perspective, planar light and geometric masses | no extra windows/stairs, warped load-bearing shapes or invented architecture |
+| `portrait-character` | posed/candid single or multiple face-focused portraits and selfies | believable mature character design, facial acting, silhouette and clothing | avoid same-face anime beautification; keep age, expression, distinct identity |
+| `food-lifestyle` | prepared meals, cafés, tableware, drinks, tabletop dining scenes | attractive but restrained hard-edge highlights, flat hue zones and food silhouette | preserve dish ingredients, vessel shapes, object layout; no imaginary garnish or labels |
+| `macro-nature` | flowers, plants, insects, textures and biological close-ups | botanical shape rhythm, purposeful contour economy, focal-plane contrast | retain petal/leaf arrangement and biologically meaningful anatomy |
+| `interior-atmosphere` | rooms, homes, indoor cafés, stations and designed spaces | simplified architectural volume, layered depth, graphic indoor lighting | preserve room layout, openings, furniture arrangement and consistent perspective |
 
-Scene modes are **rendering strategies**, not separate franchises. They share the same visual DNA. In a series, modes may vary, but line/shadow/material behavior should remain recognizably coherent.
+**Routing caveat:** Some of the original six modes describe *dramatic treatment* rather than a distinct subject category. That is intentional backward compatibility. Select whichever mode best explains the **dominant creative task**, rather than matching a photo's tags literally. For example, a child in motion can be `dynamic-action` or `youth-energetic`, but not two primary modes; a cat on a bench normally prefers the more specific `pet-character` to `everyday-still-life`.
 
-## 5a. Extensible scene-mode contract
+## 5a. Extensible mode contract
 
-The six v0.1 modes are the **initial library**, not an exhaustive set of acceptable photo categories. Future modes (e.g., night neon, rain, pets, vehicles, nature, architectural detail) must be addable **without modifying core `SKILL.md`**.
+- `references/scene-modes.md` is the scene registry; each row maps `mode_id → modes/<id>.md → cues → exclusions → example`.
+- Every mode file follows a reusable schema: `mode_id`, `when_to_use`, `source_cues`, `composition_strategy`, `linework`, `palette`, `shadow_grammar`, `background_policy`, `preservation_guardrails`, `negative_constraints`, `quality_checks`.
+- New modes require one standalone `modes/<id>.md`, one registry row and relevant regression scenarios; **no changes to root `SKILL.md` or the prompt construction contract**.
+- When no mode fits, choose a neutral photo-specific cel direction rather than a mismatched mode and note the unmatched photo category for potential later extension.
+- Future candidates are `group-narrative`, `wildlife-character`, `night-sky`, underwater, aerial and other truly distinct material/drawing problems. Sports/couple/wedding photography can initially use existing action/portrait/quiet modes.
+- Series coherency is conveyed by shared cel linework/shadow/material decisions, not identical compositions or scene modes.
 
-- Store the routing catalogue in `references/scene-modes.md`; each registered mode points to one standalone `modes/<mode-id>.md` file.
-- Each mode definition uses one consistent schema: `mode_id`, `when_to_use`, `source_cues`, `composition_strategy`, `linework`, `palette`, `shadow_grammar`, `background_policy`, `preservation_guardrails`, `negative_constraints`, and `quality_checks`.
-- Use exactly one primary mode per image; the shared cel grammar takes precedence. User-selected modes override auto-routing unless incompatible with critical preservation requirements.
-- Add a future mode by creating a new mode file, registering it in the catalogue, and adding examples/regression cases; do not change the image-analysis and prompt-construction layers.
-- For imagery that fits no named mode, use the shared cel grammar with a neutral, content-derived scene direction; **do not force a mismatched mode**. The next iteration may promote recurring cases to a documented new mode.
-- Series coherence comes from shared line/shadow/design grammar even when individual scene modes differ.
+## 5b. Six composable atmosphere profiles
+
+An atmosphere profile modifies lighting, color and environmental treatment **without becoming a second scene mode**. These belong in `atmospheres/<id>.md`; registry/routing guidance is in `references/atmosphere-selection.md`.
+
+| Atmosphere ID | Source evidence | Rendering grammar | Guardrail |
+| --- | --- | --- | --- |
+| `neon-night` | existing artificial lights, signs, dark urban scene | distinct dark blue/violet cel-shadow planes, saturated local lights, controlled colored reflections | preserve actual light-source locations, no random signs or cyberpunk city |
+| `golden-hour` | visible warm low sun, long shadows | amber highlight masses, cool complementary shadow planes, clear backlit edges | do not move sun or invent sunset in daytime image |
+| `rainy` | visible rain, wet pavement, droplets and reflections | graphic wet reflection patches, rain marks only if present, restrained cool lighting | no fabricated rain or soaked clothes |
+| `snowy` | snow/ice, visible winter conditions | distinct paper-light snow masses, layered blue-gray shadows | no fictional snowfall or loss of snow-relevant geometry |
+| `misty` | visible fog, haze or low-contrast atmospheric depth | graded **distance layers**, simplified background contours; flat cel foreground remains clear | do not uniformly blur the whole cel image |
+| `backlit` | strong visible rear/side light with silhouette | graphic rim-light masses, controlled near-black shapes and selective inner detail | retain face/subject legibility and original direction of light |
+
+**Composition/compatibility rules:**
+- Automatically choose **zero to two** atmosphere profiles only when justified by visible source evidence; no default profile is equally valid.
+- User can explicitly request a weather/time change; it is then a conscious **environment redesign**, not observation-preserving auto-routing. Flag if it changes documentary facts substantially.
+- Examples of compatible combinations: `vehicle-mechanical + neon-night + rainy`, `portrait-character + golden-hour + backlit`, `landscape-cinematic + misty`.
+- Avoid contradictory profiles such as `neon-night + golden-hour` as a single physical lighting condition. If profiles conflict, choose the source-grounded or explicitly requested dominant one; do not silently blend inconsistent lighting.
+- Atmosphere must never override P0/P1 preservation, cel-style grammar, or an explicitly approved master composition.
+
+## 5c. Automatic selection and prompt assembly
+
+1. Parse the photo into **subject/object**, **observed action**, **environment**, **lighting/weather** and preservation anchors. Distinguish *what appears* from *what could be creatively added*.
+2. Apply explicit user mode/profile choices first (unless they conflict with hard preservation).
+3. Choose a single primary mode by dominant creative difficulty: subject-specific faithful depiction generally outranks broad `urban-cinematic`; a decisive motion/narrative may outrank static subject classification. Surface material ambiguity via a concise choice only if materially necessary.
+4. Auto-select compatible grounded atmosphere profile(s) or none. Do not create rain, snow, neon, fog or sunset that was not present.
+5. Build a single brief: P0/P1 anchors + shared cel grammar + one mode + zero-to-two atmosphere modifiers + composition/crop + exclusions.
+6. Run independent checks: core-photo retention, primary-mode suitability, atmosphere realism, drawing consistency, no invented labels, and series cohesion where relevant.
+
 
 ## 6. User-controllable parameters
 
@@ -104,7 +142,8 @@ Keep natural language as the main interface; formal fields are internal and opti
 | `identity_lock` | `high` | `high`, `balanced`, `stylized` |
 | `background_policy` | `simplify` | `preserve`, `simplify`, `redesign` |
 | `composition_policy` | `source-guided` | `locked`, `source-guided`, `recompose` |
-| `scene_mode` | `auto` | `auto` or one named mode |
+| `scene_mode` | `auto` | `auto` or one registered primary mode |
+| `atmosphere_profiles` | `auto` | `auto`, `none`, or ordered list of profile IDs (normally 0–2) |
 | `aspect_ratio` | `original` | `original` or explicit ratio |
 | `typography` | `none` | `none`, `user-specified` |
 | `output` | `single-frame` | `single-frame`, `series` |
@@ -116,9 +155,9 @@ Keep natural language as the main interface; formal fields are internal and opti
 
 1. **Inspect** reference photograph(s) and any user style references.
 2. **Map** Source Map, P0/P1/P2 anchors, emotional register, constraints and pitfalls.
-3. **Select** primary scene mode and summarize the visual proposition in one sentence (what makes this an animation frame, what remains from the photograph).
+3. **Select** exactly one primary scene mode and zero-to-two compatible atmosphere profiles (or neutral fallback) and summarize the visual proposition in one sentence. No atmosphere is the valid default when the source provides no matching evidence.
 4. **Resolve** user overrides, preservation level, original aspect ratio and background policy; avoid inventing unspecified typography.
-5. **Build** an image-edit brief from (a) source fidelity, (b) cel visual DNA, (c) mode-specific direction, (d) background & composition, (e) exclusions, (f) evaluation checklist.
+5. **Build** an image-edit brief from (a) source fidelity, (b) cel visual DNA, (c) one primary mode and grounded atmosphere modifiers, (d) background & composition, (e) exclusions, (f) evaluation checklist.
 6. **Generate** with original reference file and edit-capable tool, not text-only if image source is available. If no image-edit tool is available, explicitly say so and output a reusable brief rather than claiming image production.
 7. **Review** source/result side-by-side: identity/subject count, action/pose, relevant props, cel drawing features, perspective, background, text and artifacts.
 8. **Correct** major failures in at most one targeted retry by default; ask for direction if multiple plausible artistic outcomes remain.
@@ -133,7 +172,7 @@ Use six compact semantic blocks, adapted to the actual photograph:
 1. **Original photo:** visible event, subjects, pose, key objects, camera viewpoint.
 2. **Preserve:** explicit P0 identity/count/pose/relationships, critical P1 props and spatial cues.
 3. **Cel DNA:** decisive line weight, ink outlines, flat regions, hard-edged shadow plates, mature cel-era character/background grammar.
-4. **Scene mode:** one primary strategy and its mood, lighting, palette and motion/stillness rules.
+4. **Scene mode & atmosphere:** exactly one primary strategy, plus zero-to-two compatible grounded lighting/weather profiles; explain explicit source-to-weather changes.
 5. **Composition:** photo-guided or locked crop; what background clutter may be redrawn/suppressed.
 6. **Guardrails:** no generic anime beautification, no childlike proportions, no text/logos unless requested, no extra anatomy or swapped props, no unrelated sci-fi or hallucinated scenery.
 
@@ -157,13 +196,14 @@ Every output gets both factual and visual review. A baseline 0–2 scale for eac
 - **Subject retention:** identity, number and key appearance remain identifiable.
 - **Event retention:** action, hand-object relationship and meaningful props remain correct.
 - **Cel authenticity:** outlines + flat paints + hard-edged stepped shadows are truly depicted, not just a painterly overlay.
-- **Composition:** source relationship survives; intended scene mode reads clearly.
+- **Composition:** source relationship survives; intended primary scene mode reads clearly.
+- **Atmosphere:** lighting and weather follow source evidence unless the user explicitly requested conversion; combinations are physically coherent.
 - **Integrity:** anatomy, faces, hands, physical perspective and unintended text are acceptable.
 - **Series coherence:** if relevant, image belongs in the same cel-animation universe.
 
 Hard failures: wrong number of people/fish, major identity drift, changed core action, malformed anatomy, unrelated inserted objects, unrequested text/branding, or output that stays photorealistic. Reject or transparently flag these.
 
-## 11. Initial test matrix
+## 11. Initial + expansion test matrix
 
 Reuse the five user-provided street photos as **local-only** test fixtures; never upload/commit private reference photos without express request.
 
@@ -174,6 +214,24 @@ Reuse the five user-provided street photos as **local-only** test fixtures; neve
 | Two children playing | `dynamic-action` or `youth-energetic` | changes interaction or age, deforms hands |
 | Group of older men | `urban-cinematic` | duplicates heads, invents faces, loses individuality |
 | Two anglers with onlookers | `urban-cinematic` | removes fishing rods / changes crowd and spatial relations |
+
+Extension acceptance scenarios (photo references remain local and uncommitted):
+
+| Input class | Primary mode | Atmosphere choice | Key failure to reject |
+| --- | --- | --- | --- |
+| Wet neon street with parked vehicle | `vehicle-mechanical` | `neon-night`, `rainy` | car geometry drift / invented signs |
+| Mountains at dawn | `landscape-cinematic` | `golden-hour` only if lighting shows it | replaced mountain silhouette |
+| British Shorthair cat indoors | `pet-character` | `none` unless clearly backlit etc. | changed breed, fur, eyes or body |
+| Bicycle or train close-up | `vehicle-mechanical` | observed only | changed components or perspective |
+| Stairwell/façade close-up | `architecture-graphic` | observed only | invented or warped structural elements |
+| Face-focused portrait | `portrait-character` | `backlit` if supported | younger anime-template face |
+| Food and a café table | `food-lifestyle` | observed only | added ingredients or fictional packaging |
+| Flower and insect macro | `macro-nature` | observed only | incorrect petal or wing anatomy |
+| Living room or interior café | `interior-atmosphere` | `golden-hour` if supported | changed furniture/room perspective |
+| Daytime sunny street, no rain | `urban-cinematic` | `none` | invented neon/rain/snow |
+| Snow-covered courtyard | `architecture-graphic` | `snowy` | lost snow distribution or invented storm |
+| Fog-covered forest | `landscape-cinematic` | `misty` | whole image uniformly blurred |
+| Portrait in clear rear sunlight | `portrait-character` | `backlit` | changed light direction or lost face |
 
 Test stages:
 - **RED / baseline:** same request *without* skill; capture failures in fidelity/cel style.
@@ -189,33 +247,53 @@ photo-cel-studio/
 ├── README.md
 ├── SKILL.md
 ├── references/
-│   ├── scene-modes.md        # mode registry
 │   ├── source-analysis.md
 │   ├── preservation-rules.md
 │   ├── cel-style-grammar.md
-│   ├── scene-modes.md
+│   ├── scene-modes.md            # primary mode registry
+│   ├── atmosphere-selection.md   # profile registry, source evidence + conflicts
 │   ├── prompt-construction.md
 │   └── quality-gates.md
-├── modes/
+├── modes/                        # fourteen primary modes
 │   ├── urban-cinematic.md
 │   ├── quiet-dramatic.md
 │   ├── dynamic-action.md
 │   ├── youth-energetic.md
 │   ├── sci-fi-industrial.md
-│   └── everyday-still-life.md
+│   ├── everyday-still-life.md
+│   ├── landscape-cinematic.md
+│   ├── pet-character.md
+│   ├── vehicle-mechanical.md
+│   ├── architecture-graphic.md
+│   ├── portrait-character.md
+│   ├── food-lifestyle.md
+│   ├── macro-nature.md
+│   └── interior-atmosphere.md
+├── atmospheres/                  # six optional profiles
+│   ├── neon-night.md
+│   ├── golden-hour.md
+│   ├── rainy.md
+│   ├── snowy.md
+│   ├── misty.md
+│   └── backlit.md
 ├── templates/
-│   └── mode-template.md
+│   ├── mode-template.md
+│   └── atmosphere-template.md
 ├── presets/
 │   └── default.yaml
 ├── agents/
-│   └── openai.yaml          # optional, if supported by target runtime
+│   └── openai.yaml
 ├── tests/
-│   └── scenarios.md         # no user photographs checked in
+│   ├── test_skill_contract.py
+│   └── scenarios.md           # no user photographs checked in
 └── docs/
-    └── superpowers/specs/
+    └── superpowers/
+        ├── specs/
+        └── plans/
 ```
 
-`SKILL.md` should be a concise trigger/workflow entrypoint; detailed style grammar and QA belong in `references/`, loaded on demand. No executable toolchain or external dependency is required for v0.1 unless a selected runtime needs an image tool bridge.
+`SKILL.md` remains a short decision/workflow entrypoint. Detailed style grammar, registries and evaluation rules live in `references/` and are loaded on demand. No executable image-processing engine is included in v0.1; image generation requires an available host image editing tool.
+
 
 ## 13. Boundaries, licenses and distribution
 
@@ -230,7 +308,7 @@ photo-cel-studio/
 1. **Core priority:** keep photo's action and subject recognizable even when artistic redesign is strong — proposed default: YES.
 2. **Default output:** still frame, original aspect ratio, no lettering — proposed default: YES.
 3. **Default background:** simplify rather than replace real-world setting — proposed default: YES.
-4. **V0.1 scope:** six scene modes described above; no new generation engine — proposed default: YES.
+4. **V0.1 scope:** 14 primary scene modes plus 6 evidence-grounded atmosphere profiles, each independently extensible — **APPROVED**.
 5. **Target runtime:** optimize first for Codex Agent Skill; keep portable layout to other Agent Skills readers — proposed default: YES.
 
-**Next gate:** owner reviews/approves this design. Then prepare an implementation plan and author the actual Skill and reference files, followed by baseline vs skill image tests.
+**Next gate:** owner has approved the original core defaults and this expanded scope. Update and review the implementation plan before authoring Skill files; run the baseline-vs-skill image tests during implementation.
