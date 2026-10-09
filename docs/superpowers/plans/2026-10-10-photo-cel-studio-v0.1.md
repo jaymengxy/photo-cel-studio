@@ -15,7 +15,7 @@
 - The target visual DNA is mature 1980s–1990s Japanese-style hand-drawn cel animation, not a particular series/studio's copied assets.
 - Use bold, readable outline hierarchy, broad flat-color regions, hard-edged shadow plates, believable people/animals, designed environments.
 - Preserve P0 identities, subject counts, poses, gestures, essential props, and real-world relationship before aesthetic changes.
-- Defaults: `style_strength=balanced`, `identity_lock=high`, `background_policy=simplify`, `composition_policy=source-guided`, `scene_mode=auto`, `aspect_ratio=original`, `typography=none`, `output=single-frame`.
+- Defaults: `style_strength=balanced`, `identity_lock=high`, `background_policy=simplify`, `composition_policy=source-guided`, `scene_mode=auto`, `aspect_ratio=original`, `typography=none`, `output=single-frame`, `revision_mode=new-concept`.
 - The initial registry contains: `urban-cinematic`, `quiet-dramatic`, `dynamic-action`, `youth-energetic`, `sci-fi-industrial`, `everyday-still-life`.
 - Future modes can be added through `modes/<id>.md` and a registry entry, without editing `SKILL.md`. Unknown categories fall back to neutral source-derived cel direction, not an arbitrary mode.
 - Source photographs and generated test images stay local/conversation-only unless the user expressly requests repository publication.
@@ -66,9 +66,9 @@ Five likely failures implied by the spec (each appears in an owning task's tests
 - [ ] **Step 1: Define the pre-Skill baseline** in `tests/scenarios.md`: use the five supplied photo scenarios (green bucket with fish, bench elder, playful children, crowd, anglers) with an invariant request: “convert to a cel-era animation still; keep the real people, animals, action and important props.” Do not commit private images. Record RED observations as `NOT RUN` until image generation actually occurs.
 - [ ] **Step 2: Write tests that FAIL without the skill** in `tests/test_skill_contract.py` using `unittest` + `pathlib`. Provide these test method names/assertions:
   - `test_entrypoint_has_valid_frontmatter`: `SKILL.md` exists and frontmatter declares `name: photo-cel-studio` and a photo-to-cel trigger description.
-  - `test_default_preset_matches_spec`: eight default values listed in Global Constraints exist exactly in `presets/default.yaml`.
-  - `test_required_reference_files_exist`: seven exact reference files exist; `SKILL.md` points to them.
-  - `test_six_modes_are_registered`: exactly six named v0.1 mode paths are present in `references/scene-modes.md`; each target file exists.
+  - `test_default_preset_matches_spec`: nine default values listed in Global Constraints exist exactly in `presets/default.yaml`.
+  - `test_required_reference_files_exist`: six exact reference files exist; `SKILL.md` points to them.
+  - `test_initial_modes_are_registered`: all six named v0.1 mode paths are present in `references/scene-modes.md`, every registered path exists, and adding a seventh mode remains valid.
   - `test_mode_extension_schema`: each `modes/*.md` and template contains exact headings `When to use`, `Source cues`, `Composition strategy`, `Linework`, `Palette`, `Shadow grammar`, `Background policy`, `Preservation guardrails`, `Negative constraints`, `Quality checks`.
   - `test_registry_has_neutral_fallback`: registry states what to do when none of the six modes match and notes that future modes require no core change.
   - `test_everyday_still_life_covers_animals`: `modes/everyday-still-life.md` describes fish and animal/object recognition.
@@ -93,7 +93,7 @@ Five likely failures implied by the spec (each appears in an owning task's tests
 - [ ] **Step 1: Implement frontmatter** `name: photo-cel-studio`, description phrased as a trigger for converting supplied photos into mature cel-animation stills, not as a workflow summary.
 - [ ] **Step 2: Implement core workflow**: inspect → source map → preserve P0/P1/P2 → select 1 mode or neutral fallback → resolve user overrides → build six-block edit prompt → use actual reference-image editing tool → review → single targeted retry → report fidelity caveats.
 - [ ] **Step 3: Add source analysis and drawing grammar**, with hard-edged shadow planes, flat regions, line-weight hierarchy and designed background; enumerate camera angle, subject count and action cues in Source Map.
-- [ ] **Step 4: Write exact eight defaults** to `presets/default.yaml`; no extra mandatory configuration.
+- [ ] **Step 4: Write exact nine defaults** to `presets/default.yaml`; no extra mandatory configuration.
 - [ ] **Step 5: Run** `python3 -m unittest discover -s tests -p 'test_*.py' -v`; expected Task 2-specific tests PASS, remaining reference/mode tests FAIL until next task.
 - [ ] **Step 6: Commit** `feat: add photo-cel core and source analysis`.
 
@@ -112,7 +112,7 @@ Five likely failures implied by the spec (each appears in an owning task's tests
 - [ ] **Step 2: Implement routing catalogue** in `references/scene-modes.md`: exactly one primary mode; explicit choice overrides auto; default mappings from the spec; human/agent-readable file paths.
 - [ ] **Step 3: Make the neutral fallback explicit**: source-derived cel grammar when no mode applies. New modes require only new mode file + catalogue row + scenario, not edit to `SKILL.md`.
 - [ ] **Step 4: Add `templates/mode-template.md`** with required fields, example trigger/negative case and mini acceptance checklist.
-- [ ] **Step 5: Run** `python3 -m unittest discover -s tests -p 'test_*.py' -v`; expected six-mode/schema/fallback/fish tests PASS, other missing content failures remain expected.
+- [ ] **Step 5: Run** `python3 -m unittest discover -s tests -p 'test_*.py' -v`; expected initial-mode/schema/fallback/fish tests PASS, other missing content failures remain expected.
 - [ ] **Step 6: Commit** `feat: add extensible cel scene-mode library`.
 
 ### Task 4: Fidelity rules, prompt assembly and quality gate
