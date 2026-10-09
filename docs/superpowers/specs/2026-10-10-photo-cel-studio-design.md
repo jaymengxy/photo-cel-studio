@@ -83,6 +83,17 @@ Build a compact internal Source Map before prompt construction:
 
 Scene modes are **rendering strategies**, not separate franchises. They share the same visual DNA. In a series, modes may vary, but line/shadow/material behavior should remain recognizably coherent.
 
+## 5a. Extensible scene-mode contract
+
+The six v0.1 modes are the **initial library**, not an exhaustive set of acceptable photo categories. Future modes (e.g., night neon, rain, pets, vehicles, nature, architectural detail) must be addable **without modifying core `SKILL.md`**.
+
+- Store the routing catalogue in `references/scene-modes.md`; each registered mode points to one standalone `modes/<mode-id>.md` file.
+- Each mode definition uses one consistent schema: `mode_id`, `when_to_use`, `source_cues`, `composition_strategy`, `linework`, `palette`, `shadow_grammar`, `background_policy`, `preservation_guardrails`, `negative_constraints`, and `quality_checks`.
+- Use exactly one primary mode per image; the shared cel grammar takes precedence. User-selected modes override auto-routing unless incompatible with critical preservation requirements.
+- Add a future mode by creating a new mode file, registering it in the catalogue, and adding examples/regression cases; do not change the image-analysis and prompt-construction layers.
+- For imagery that fits no named mode, use the shared cel grammar with a neutral, content-derived scene direction; **do not force a mismatched mode**. The next iteration may promote recurring cases to a documented new mode.
+- Series coherence comes from shared line/shadow/design grammar even when individual scene modes differ.
+
 ## 6. User-controllable parameters
 
 Keep natural language as the main interface; formal fields are internal and optional.
@@ -178,12 +189,22 @@ photo-cel-studio/
 ├── README.md
 ├── SKILL.md
 ├── references/
+│   ├── scene-modes.md        # mode registry
 │   ├── source-analysis.md
 │   ├── preservation-rules.md
 │   ├── cel-style-grammar.md
 │   ├── scene-modes.md
 │   ├── prompt-construction.md
 │   └── quality-gates.md
+├── modes/
+│   ├── urban-cinematic.md
+│   ├── quiet-dramatic.md
+│   ├── dynamic-action.md
+│   ├── youth-energetic.md
+│   ├── sci-fi-industrial.md
+│   └── everyday-still-life.md
+├── templates/
+│   └── mode-template.md
 ├── presets/
 │   └── default.yaml
 ├── agents/
