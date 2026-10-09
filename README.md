@@ -4,7 +4,7 @@
 
 这个项目是一个供 Codex 等支持 Agent Skills 的环境读取的**视觉创作 Skill**，不是图片处理算法、滤镜、LUT 或独立图像生成模型。它必须配合一个**可用的图像编辑或生成工具**，才能真正输出图片。
 
-## 安装（Codex）
+## Installation / 安装（Codex）
 
 克隆到你的 Codex skills 目录：
 
