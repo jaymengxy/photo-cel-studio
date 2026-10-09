@@ -23,6 +23,12 @@ Use this Skill for photo-to-cel conversion, series-matched stills, source-ground
 8. **Review the result** using `references/quality-gates.md`: compare against the original for count, faces, poses, meaningful props, cel contours, flat paints, shadows, anatomy, weather and unrequested text. Make at most one targeted correction by default when the tool supports it, and identify unresolved fidelity drift.
 9. **Deliver** the visual and short explanation of the selected primary mode and optional atmospheres. For multiple photos, lock one shared line/shadow/material grammar while respecting different content. For a previously approved image, apply **master-lock**: change only the specified feature.
 
+## Single-image output contract
+
+For a **single source** photo request, produce one independent animation frame at the requested/original ratio: **no collage**, no multi-panel grid, no contact sheet, no before/after composite, no adding other reference photos into the rendered scene. For a set of photos, generate **one output per input** by default, each as its own artifact; optionally show a *separate* contact sheet only when explicitly requested.
+
+Keep the original light direction and actual cast-shadow shapes unless the user explicitly requests a changed lighting scene; **no invented shadows** solely to appear cinematic.
+
 ## Decision precedence
 
 Explicit user constraints and approved-master lock > P0 preserved documentary content > shared cel grammar > primary mode > atmosphere modifiers > decorative preferences.

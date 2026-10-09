@@ -22,11 +22,11 @@ Exactly **one primary** mode from the registry and its distinctive composition/l
 
 ### 5. Composition and background
 
-Keep source-guided camera angle and crop by default; simplification removes expendable details without replacing the observed event. Original aspect ratio default. Reserve no typography unless user requests it. Series mode uses one common contour/shadow/paint treatment with individual source palettes.
+Keep source-guided camera angle and crop by default; simplification removes expendable details without replacing the observed event. Original aspect ratio default. Reserve no typography unless user requests it. A **single source** must yield one standalone edited still, **no collage** or multi-panel layout. For multiple sources, render one image for each source unless a montage is explicitly requested. Series mode uses one common contour/shadow/paint treatment with individual source palettes.
 
 ### 6. Guardrails, exclusions, final look
 
-**No invented text**, fictional brands, guessed logos, signs, watermarks, serial codes, fake credits or **no invented dates**; **no logos** unless explicitly requested and provided. Keep real clothing markings when faithfully reproducible, otherwise do not turn blurred text into fabricated claims. No added props, limbs, faces, neon, rain, snow, sci-fi machines or altered action by default. Avoid cute chibi, generic idol-face changes, 3D/PBR anime shader, blurry digital paint or hand-drawn outlines layered over untouched photo textures.
+**No invented text**, fictional brands, guessed logos, signs, watermarks, serial codes, fake credits or **no invented dates**; **no logos** unless explicitly requested and provided. Keep real clothing markings when faithfully reproducible, otherwise do not turn blurred text into fabricated claims. No added props, limbs, faces, neon, rain, snow, sci-fi machines or altered action by default. There must be **no invented shadows**, foliage silhouettes, sunlight or light-source positions merely to make a daytime photograph more dramatic. Avoid cute chibi, generic idol-face changes, 3D/PBR anime shader, blurry digital paint or hand-drawn outlines layered over untouched photo textures.
 
 ## Example brief (specificity over keywords)
 

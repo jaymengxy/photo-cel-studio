@@ -11,6 +11,11 @@ Run these after any generated image. Instructions and a confident prompt are not
 
 A critical violation is **HARD FAIL**, even if the image is visually impressive. Do not report faithful conversion.
 
+## Single-image and source-light hard checks
+
+- A **single source** photo must produce one isolated output frame: **no collage**, no contact-sheet layout, no comic panels, no unexpected reference photos in the same picture. A series defaults to one separate output per original.
+- Keep the original lighting direction and real shadow geometry. Reject **invented shadows** or newly added tree silhouettes cast over an originally plain wall unless the user specifically asked to change the light or environmental setting. A model making the image prettier is not authorization to change weather/time.
+
 ## Stage B — Designed cel frame
 
 1. Outer/inner line-weight hierarchy visible, not generic black edge filter or vector tracing.
