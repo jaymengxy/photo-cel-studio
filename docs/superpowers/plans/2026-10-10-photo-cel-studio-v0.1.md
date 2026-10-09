@@ -10,6 +10,24 @@
 
 **Spec:** `docs/superpowers/specs/2026-10-10-photo-cel-studio-design.md`
 
+## Execution status — 2026-10-10
+
+**Implementation authored in `design/photo-cel-studio-v0.1`; GitHub Actions structural contract checks PASS (23 tests at the verified head). This does not mean image quality is accepted.**
+
+- Task 1: Contract tests and local-only scenario matrix **implemented**; missing entry/registry evidence confirmed RED; GitHub Actions CI later verified GREEN.
+- Task 2: Root Skill, source analysis, cel visual grammar and ten defaults **implemented**.
+- Task 3: Fourteen scene modes plus registry and extension template **implemented**.
+- Task 4: Six atmosphere modifiers plus registry and extension template **implemented**.
+- Task 5: Preservation, six-block prompt, quality rules and extra tests for no-collage/invented-shadows **implemented**.
+- Task 6: README, Codex branch install, optional metadata, GitHub Actions CI **implemented**. Image experiments via ChatGPT generated two **incorrect five-image collages** instead of the requested individual still. **Standalone source-photo comparison and Codex runtime image connector acceptance remain BLOCKED / NOT PASSED.**
+- Project status: **DRAFT PR / no main merge / no release tag**. Do not treat structural PASS as artistic PASS; see `tests/scenarios.md` for evidence and outstanding scenarios.
+
+### Execution rulings / deviations
+
+- The environment cannot clone GitHub over network from the local container; commits were authored through the authorized GitHub connector on the PR branch, and the test suite was executed by GitHub Actions on that branch. This differs from local-worktree step sequencing, but preserves Git history and independent CI evidence.
+- The model-generated comparison tool combined all five images despite single-source request, so the intended single-image QA is **not** green. The new fail-first structural tests cover mandatory output constraints, but cannot prove backend behavior. A Codex-connected reference-image editor is needed to complete that gate.
+- Input photos and generated montages were never published to GitHub.
+
 ## Global Constraints
 
 - The target visual DNA is mature 1980s–1990s Japanese-style hand-drawn cel animation, not a particular series/studio's copied assets.
@@ -193,6 +211,6 @@ Atmosphere-specific risk scenarios are covered in Task 4: dry daytime image must
 
 ## Execution handoff
 
-**Status:** proposed plan; do not begin implementation until owner reviews plan and chooses execution mode.
+**Status:** native implementation committed to Draft PR branch; CI structural tests passed; separate photo/model acceptance pending.
 
 Recommendation: Native / inline implementation because this is a documentation-focused Skill with two registries, 20 independently defined modules and one narrow structural test suite; an end-to-end review after task 5 is sufficient for the initial version.
