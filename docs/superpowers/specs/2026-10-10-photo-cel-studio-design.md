@@ -79,6 +79,7 @@ Build a compact internal Source Map before prompt construction:
 | `dynamic-action` | running, play, movement, decisive moments | action-keyframe energy, directionality, forceful pose silhouettes, tighter value grouping | don't invent new gestures, people, speed lines by default |
 | `youth-energetic` | candid children, friendly interactions and play | brighter clear accent colors, expressive but believable acting | maintain age, dignity, and actual interaction |
 | `sci-fi-industrial` | existing machines, infrastructure, geometric cityscapes | hard perspective, mechanical/architectural mark making, controlled industrial lighting | sci-fi conversion/invented tech only if user requests |
+| `everyday-still-life` | pets, fish, food, small objects, close-up everyday observations | elegant silhouette, simplified object shapes, source-derived flat palette and hard-edged accents | don't add animals/objects or convert real anatomy into generic cartoon icons |
 
 Scene modes are **rendering strategies**, not separate franchises. They share the same visual DNA. In a series, modes may vary, but line/shadow/material behavior should remain recognizably coherent.
 
@@ -157,7 +158,7 @@ Reuse the five user-provided street photos as **local-only** test fixtures; neve
 
 | Photo | Expected auto mode | Main potential failure |
 | --- | --- | --- |
-| Fish in green bucket | `urban-cinematic` / object-focused variant | invents fish, changes count/colors/anatomy |
+| Fish in green bucket | `everyday-still-life` | invents fish, changes count/colors/anatomy |
 | Older man and backpack on bench | `quiet-dramatic` | changes face/gesture/thermos/hat |
 | Two children playing | `dynamic-action` or `youth-energetic` | changes interaction or age, deforms hands |
 | Group of older men | `urban-cinematic` | duplicates heads, invents faces, loses individuality |
@@ -208,7 +209,7 @@ photo-cel-studio/
 1. **Core priority:** keep photo's action and subject recognizable even when artistic redesign is strong — proposed default: YES.
 2. **Default output:** still frame, original aspect ratio, no lettering — proposed default: YES.
 3. **Default background:** simplify rather than replace real-world setting — proposed default: YES.
-4. **V0.1 scope:** five scene modes described above; no new generation engine — proposed default: YES.
+4. **V0.1 scope:** six scene modes described above; no new generation engine — proposed default: YES.
 5. **Target runtime:** optimize first for Codex Agent Skill; keep portable layout to other Agent Skills readers — proposed default: YES.
 
 **Next gate:** owner reviews/approves this design. Then prepare an implementation plan and author the actual Skill and reference files, followed by baseline vs skill image tests.
