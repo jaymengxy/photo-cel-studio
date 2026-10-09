@@ -164,6 +164,20 @@ class SkillContractTests(unittest.TestCase):
         self.assertIn("available image-edit", text)
         self.assertIn("do not claim", text)
 
+    def test_single_input_stays_one_frame_not_collage(self):
+        entry = read("SKILL.md").lower()
+        prompt = read("references/prompt-construction.md").lower()
+        gate = read("references/quality-gates.md").lower()
+        for text in (entry, prompt, gate):
+            self.assertIn("no collage", text)
+            self.assertIn("single source", text)
+
+    def test_lighting_not_reinvented_for_style(self):
+        prompt = read("references/prompt-construction.md").lower()
+        gate = read("references/quality-gates.md").lower()
+        self.assertIn("invented shadows", prompt)
+        self.assertIn("invented shadows", gate)
+
     def test_workflow_can_load_only_selected_modes(self):
         text = read("SKILL.md").lower()
         self.assertIn("on demand", text)
