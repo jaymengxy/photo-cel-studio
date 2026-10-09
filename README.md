@@ -22,6 +22,14 @@ git clone git@github.com:jaymengxy/photo-cel-studio.git ~/.codex/skills/photo-ce
 
 **注意：** Codex 中安装 Skill ≠ 自动安装图像生成工具。需要在当前环境配置支持参考图的图像编辑能力。若当前运行环境 **no image editing capability**，本 Skill 只能提供编辑任务书，不能声称已经生成了图像。
 
+### 当前 Draft PR 分支安装（合并 main 前请用此命令）
+
+```bash
+git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-studio.git ~/.codex/skills/photo-cel-studio
+```
+
+如果你已经克隆了仓库，在这个 Skill 文件夹中执行 `git fetch origin && git switch design/photo-cel-studio-v0.1` 即可。合并到 `main` 之后再切回正式版本。这个 Skill 需要你的 Codex 运行环境能使用参考图像编辑/生成能力，否则只能给出编辑任务书。
+
 ## 使用
 
 在支持读取本 Skill 的会话中上传一张自己的照片：
