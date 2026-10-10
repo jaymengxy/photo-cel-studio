@@ -57,8 +57,8 @@
 
 - [x] Record current source availability and NOT RUN image matrix without rewriting historical generated/partial rows.
 - [x] Independent review of current delta and full v0.2 versus v0.1: no blocking findings. Clarified conditional cool colors in urban/landscape guidance; fresh full suite 52/52 PASS and whitespace clean. Remote main freshness is checked separately before publication; visual NOT RUN remains a documented limitation.
-- [ ] Commit explicit text/test files locally; verify a clean working tree and report base/final commit, changed/new files and limits.
-- [ ] Push the combined v0.2 changes and fast-forward main; verify remote branch identities and CI.
+- [x] Commit explicit text/test files locally: 7848b646cb7f19184b0c2856a7279aeb66a2804c, based on 2402db75fdbcb5326db56461c7fa2651a10dfa16; working tree clean.
+- [x] Push the combined v0.2 changes and fast-forward main: both remote branches verified at 7848b646cb7f19184b0c2856a7279aeb66a2804c. Feature CI run 38061069797 and main CI run 38061143755 both completed successfully. This completion-record commit follows the verified integration and will be published to both branches.
 
 ## Execution rulings
 
