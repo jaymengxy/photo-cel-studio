@@ -49,4 +49,6 @@ When two modes overlap, pick the one with greater source-specific fidelity requi
 
 ## Series consistency
 
+The v0.2 fixed mature-ova method affects all 14 modes when that profile is selected; read the mode-impact table in `references/mature-cel-render.md`. Urban/vehicle modes directly apply cool road/building masses and flat people/machines; architecture/industrial apply painted built-setting planes; landscape/interior apply source-specific environment painting; the remaining modes mainly apply foreground ink/paint economy and quieter backgrounds. Gray-blue does not overwrite warm interior light, skin, food, species colors or identity markings. Explicit other profiles retain their own drawing/export baselines. Mode routing and the six atmosphere registrations are unchanged.
+
 Keep one Cel Style Profile and its resolved contours, shadow steps and background finish consistent unless per-image styles are explicitly requested; different scenes may select distinct modes and source palettes. Atmosphere is a separate optional stage, not a scene category or era/style preset.

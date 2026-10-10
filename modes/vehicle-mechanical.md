@@ -31,6 +31,8 @@ Render roads/rails and buildings as cel backgrounds; do not displace wheels rela
 
 Under mature-ova, use traditionally painted wall/asphalt/foliage masses with lighter distant ink. Keep street depth, traffic signals, palms, road markings and regional architectural cues when visible, plus the rider/truck/car spatial order. Simplify texture without making the city an idealized travel advertisement; clean-modern follows its cleaner paint-edge policy instead.
 
+Apply the fixed mature method in `references/mature-cel-render.md`: stronger pressure-varied outer ink, sparse interior folds/seams, opaque rider base plus one connected shadow, selective flat chrome strokes and coherent engine masses. Quiet roads/sky/wall shadows into supported gray-blue painted planes while source sunny planes remain daylight and yellow/orange identity accents survive. Do not simplify away fork/axle/grip/frame connections. Keep native plus verified original-ratio long-edge-540 delivery unless overridden.
+
 ## Preservation guardrails
 Wheel count, model-recognizable silhouette, mirrors, handlebars, door/window pattern, perspective and key components.
 

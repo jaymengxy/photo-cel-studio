@@ -61,6 +61,16 @@ Record a **fidelity verdict** and a **style verdict** separately. Fidelity PASS 
 
 Keep fidelity/line/palette/shadow/background/finish observations distinct in the run sheet. Style enthusiasm cannot compensate for wrong faces, missing motorcycle parts, invented shadows or collage output.
 
+## Fixed mature-method checks
+
+For mature-ova, inspect the observable contract in `references/mature-cel-render.md`: pressure changes visible at delivery density; sparse structural ink; skin/clothes with opaque base plus one connected shadow; large source-supported cool background masses; opaque painted building/sign/sky/road edges; local warm/identity colors intact. A uniform blue filter, identical fine noise across sky/road/walls, technical vector precision or lower pixel count alone cannot pass the style gate. Daylight remains daylight; source-clear sky and dry roads stay so. Preserve source/user-authorized geometry, not copied style-reference content.
+
+## Delivery Gate
+
+Resolve and record actual delivery size separately from generator settings. Retain native and export a separate original-ratio PNG, no crop/stretch/upscale: mature default long edge 540 unless explicit size/master-lock/comparison rules override it; other profiles retain their own baseline. The macOS helper `python3 scripts/export_frame.py <native-file> <delivery.png> --max-edge 540` verifies PNG dimensions after export and converts sips-supported natives (e.g. JPEG); use 0 for native-size PNG. Unsupported formats/platforms require an available equivalent tool or an honest unavailable-export report, not an extension rename.
+
+Read actual pixel width/height, inspect the **exported** image, then display that delivery path. Check that reduced ink remains readable and important grips/props/faces are not destroyed. Record both native and delivery paths/size. Requested prompt dimensions or a generator's preview are not metadata verification. Delivery PASS means correct artifact/size, not Fidelity or Style PASS.
+
 ## Corrective workflow
 
 - Name the *actual observed defect* and its P0/P1/style category; e.g., “extra fish”, “new backpack color”, “missing thermos”, “same-face in crowd”, “rain inserted into dry daylight”, or “smooth 3D shadows”.

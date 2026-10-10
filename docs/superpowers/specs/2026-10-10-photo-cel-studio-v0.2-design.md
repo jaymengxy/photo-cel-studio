@@ -30,13 +30,19 @@ Every profile follows `templates/profile-template.md`, including ID, use, intent
 
 ## Controls and prompt
 
-Retain the ten v0.1 defaults. Add `cel_style_profile: mature-ova`, `profile_intensity: medium`, `palette_character: restrained`, `surface_texture: subtle-analog`. These are optional refinements, bounded by the selected profile. Resolve profile-specific baseline first so choosing clean-modern actually produces a modern comparison despite global defaults. Explicit control overrides may refine the profile but cannot defeat its defining features or preservation; explain conflicts.
+Retain the ten v0.1 defaults. Original v0.2 controls were mature-ova / medium / restrained / subtle-analog; the user-approved fixed-method refinement below supersedes those defaults. Resolve profile-specific baseline first so choosing clean-modern actually produces a modern comparison despite global defaults. Explicit controls cannot defeat defining profile traits or preservation.
 
 Use six prompt sections: Source Description; Preservation Contract; Shared Cel Grammar; Selected Cel Style Profile; Selected Scene Mode + Atmosphere; Composition / Background / Negative Constraints. Translate adjectives into executable contours, paint planes, hue roles and bounded texture. Use the actual reference image, never reconstruct it from caption alone.
 
 Same-photo multi-profile comparison is an explicit request for multiple independent frames, one selected profile per call. Keep source, backend/model, input ratio, preservation and non-style settings fixed. Never feed a previous variant as the source. A comparison does not unlock an approved master; a deliberate new concept must be requested.
 
 ## Validation and delivery
+
+### Fixed-method refinement within v0.2
+
+Mature baseline: high / cool-restrained / subtle-analog. Foregrounds use opaque base plus one connected shadow, few folds/metal highlights and visibly pressure-varied ink. Backgrounds use restrained gray-blue/cool dark masses and opaque painted building/sign/sky/road passages. Source light, warm accents, identity colors and weather stay intact; facade redesign/aging needs source evidence or explicit authorization. All 14 modes inherit selected-profile craft, with direct city/vehicle/built-setting rules and source-specific treatment for other subjects. No new profile/mode/atmosphere.
+
+`references/mature-cel-render.md` owns prompt blocks, mode scope and export. Add delivery_long_edge profile-default, retain_native true, delivery_format png. Mature resolves to original-ratio long edge 540 with no upscale/crop; other profiles resolve native unless overridden. Master-lock keeps accepted size; comparisons use one common size. Save native, actually export, verify dimensions and inspect delivery. The macOS PNG helper tests real portrait/landscape/square/native/small/override exports, not art-quality claims. Existing P01–P06 states remain, with separate current-method evidence. This refinement updates local v0.2 source and installed skill; historical push authority in the original design is not renewed by this section.
 
 - Baseline: 23 existing Python stdlib contract tests; keep all old assertions, extending only the default-key schema for four mandated additions.
 - Fail-first tests cover default, registry/files/schema/extension, exactly-one/on-demand selection, preservation precedence, layer independence, vehicle recommendation and unchanged v0.1 registration; additional contracts cover prompt order, profile differentiation, controls, comparison and independent style gates.

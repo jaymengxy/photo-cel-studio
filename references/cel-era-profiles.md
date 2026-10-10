@@ -22,7 +22,7 @@ The pairings are recommendations, not a closed allowlist. All registered modes c
 
 ## Controls: resolve after selecting the profile
 
-`presets/default.yaml` retains the ten v0.1 defaults and adds the four v0.2 fields. Treat omitted controls as **profile-specific baseline** choices below. Preset values are defaults, not explicit user overrides. This prevents a selected clean-modern-cel from inheriting an unwanted aged grain layer. An explicit user control refines the chosen baseline; it does not silently select a different profile.
+`presets/default.yaml` retains the ten v0.1 defaults, the four v0.2 style fields and the v0.2 fixed-delivery refinement. Treat omitted controls as **profile-specific baseline** choices below. Preset values are defaults, not explicit user overrides. This prevents a selected clean-modern-cel from inheriting unwanted aged grain, cool grouping or a reduced-size preview. An explicit user control refines the chosen baseline; it does not silently select a different profile.
 
 | Field | Values | Effect and boundary |
 | --- | --- | --- |
@@ -30,14 +30,19 @@ The pairings are recommendations, not a closed allowlist. All registered modes c
 | `profile_intensity` | `low`, `medium`, `high` | Low: light contour/color/finish emphasis; medium: fully readable profile traits; high: stronger hierarchy, palette grouping and painted finish within source geometry. **Does not change preservation priority**, anatomy, count, pose, camera, identity or time/weather. |
 | `palette_character` | `source-faithful`, `restrained`, `clear-bright`, `cool-restrained`, `warm-restrained` | Changes secondary hue/value organization; never overwrites **identity colors** (coat markings, yellow shirt, orange truck, vehicle paint). Keep observed light color/direction. |
 | `surface_texture` | `none`, `subtle-analog`, `moderate-analog` | None: drawn ink/paint remains, no simulated grain. Subtle: faint paint/cel/film variation below facial/mechanical detail. Moderate: visible yet non-obscuring medium texture. Texture **cannot replace** flat cel plates, form shadows or designed linework. |
+| `delivery_long_edge` | `profile-default`, `native`, or a positive integer | Omitted/profile-default resolves from the selected profile below; explicit size wins. Actual export after generation, original ratio, no upscale. Master-lock keeps accepted size; comparisons resolve one common size. |
+| `retain_native` | `true` default | Save native separately from delivery; export never overwrites it. Discarding native requires an explicit user request. |
+| `delivery_format` | `png` default | Separate delivery is PNG; generated native remains intact. A prompt's requested dimensions are not verified output metadata. |
 
-| Selected profile | Intensity baseline | Palette baseline | Surface baseline |
-| --- | --- | --- | --- |
-| mature-ova | medium | restrained | subtle-analog |
-| clean-modern-cel | medium | clear-bright | none |
-| urban-noir-cel | medium | cool-restrained | subtle-analog |
-| industrial-mecha-cel | medium | restrained | subtle-analog |
-| warm-daily-ova | medium | warm-restrained | subtle-analog |
+| Selected profile | Intensity baseline | Palette baseline | Surface baseline | Delivery long edge |
+| --- | --- | --- | --- | --- |
+| mature-ova | high | cool-restrained | subtle-analog | 540 |
+| clean-modern-cel | medium | clear-bright | none | native |
+| urban-noir-cel | medium | cool-restrained | subtle-analog | native |
+| industrial-mecha-cel | medium | restrained | subtle-analog | native |
+| warm-daily-ova | medium | warm-restrained | subtle-analog | native |
+
+The fixed mature method is defined in `references/mature-cel-render.md`, loaded through `profiles/mature-ova.md`. It affects all modes using this selected profile; gray-blue is a secondary-background/shadow strategy, not permission to blue-tint warm sources, identity hues or all subjects. Other profiles keep their defining traits and native baseline. Delivery density is not evidence of cel authenticity.
 
 If a control conflicts with the profile's defining treatment, retain preservation and the profile's core line/shadow language, explain the tension and use a compatible bounded interpretation. For example, high saturation means stronger existing accents, not a uniformly candy-colored city; requested analog texture on clean-modern remains faint enough to keep the comparison clean. Switching to a different profile requires an explicit style choice.
 

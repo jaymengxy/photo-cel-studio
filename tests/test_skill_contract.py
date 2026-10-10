@@ -32,9 +32,12 @@ DEFAULTS = {
     "output": "single-frame",
     "revision_mode": "new-concept",
     "cel_style_profile": "mature-ova",
-    "profile_intensity": "medium",
-    "palette_character": "restrained",
+    "profile_intensity": "high",
+    "palette_character": "cool-restrained",
     "surface_texture": "subtle-analog",
+    "delivery_long_edge": "profile-default",
+    "retain_native": "true",
+    "delivery_format": "png",
 }
 PROFILES = (
     "mature-ova", "clean-modern-cel", "urban-noir-cel",
@@ -69,6 +72,18 @@ def headings(text: str):
 
 
 class SkillContractTests(unittest.TestCase):
+    def test_mature_method_is_discoverable_and_delivery_is_profile_scoped(self):
+        profile = read("profiles/mature-ova.md")
+        self.assertIn("references/mature-cel-render.md", profile)
+        method = read("references/mature-cel-render.md")
+        for token in ("540", "native", "gray-blue", "one connected shadow", "daylight", "master-lock"):
+            self.assertIn(token, method.lower())
+        registry = read("references/cel-era-profiles.md")
+        self.assertRegex(registry, r"(?m)^\| mature-ova \| high \| cool-restrained \| subtle-analog \| 540 \|$")
+        self.assertRegex(registry, r"(?m)^\| clean-modern-cel \| medium \| clear-bright \| none \| native \|$")
+        self.assertIn("delivery_long_edge", read("references/prompt-construction.md"))
+        self.assertIn("Delivery Gate", read("references/quality-gates.md"))
+
     def test_ci_covers_v02_development_branch(self):
         workflow = read(".github/workflows/validate-skill.yml")
         branch_list = re.search(r"(?m)^\s+branches:\s*\[(.+)\]\s*$", workflow)

@@ -1,6 +1,6 @@
 # photo-cel-studio
 
-**摄影瞬间 → 保真 → Cel Style Profile → Scene Mode → Atmosphere → 绘制 → 独立质量门。** v0.2 默认使用 `mature-ova`，以有分量的外轮廓、较轻的内部结构线、克制综合色、塑造体积的硬边平涂和传统背景美术，转译成熟赛璐璐动画画面。保留人物、动物、车辆、建筑、重要物件、真实动作与镜头关系，也可明确选择其他绘制风格。
+**摄影瞬间 → 保真 → Cel Style Profile → Scene Mode → Atmosphere → 重绘 → 独立质量门 → 验证导出。** v0.2 默认 `mature-ova` 固定为更明显的手绘粗细变化、人物平涂与简练衣褶、克制的灰蓝背景和大面积冷色暗部、建筑/招牌/天空的绘画质感。原图决定场景关系与光线；保留身份色和局部暖光。默认交付长边 **540 像素** 的原比例 PNG，同时保留生成原尺寸文件。
 
 这个项目是一个供 Codex 等支持 Agent Skills 的环境读取的**视觉创作 Skill**，不是图片处理算法、滤镜、LUT 或独立图像生成模型。它必须配合一个**可用的图像编辑或生成工具**，才能真正输出图片。
 
@@ -80,7 +80,7 @@ git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-stu
 
 | ID | 可观察的绘制差异 |
 | --- | --- |
-| `mature-ova`（默认） | 较重外轮廓、较轻且有细微压力变化的结构线、克制的道路/天空/建筑综合色、塑造体积的硬边阴影、传统手绘背景和轻微模拟介质 |
+| `mature-ova`（默认） | 明显手绘线条层次、人物 base + 一块连贯阴影、少量衣褶/反光、灰蓝背景与冷色暗部、传统绘画背景；长边 540 PNG + 原尺寸文件 |
 | `clean-modern-cel` | 更精确规律的线条、清晰明亮的源图色组、整洁的平涂边缘、默认无模拟颗粒；保留成熟比例 |
 | `urban-noir-cel` | 冷峻的次要色组、源光支持的更强明暗对比、较重轮廓和局部暗部融合；白天仍然是白天 |
 | `industrial-mecha-cel` | 机械连接、轮胎/前叉/发动机透视、负重体块和金属分面更明确；真实车辆不会变成机甲 |
@@ -130,11 +130,26 @@ industrial-mecha-cel、clean-modern-cel。使用相同模型/编辑后端、输�
 | 字段 | 默认 | 意义与边界 |
 | --- | --- | --- |
 | `cel_style_profile` | `mature-ova` | 一个已注册 ID 或显式 `auto` |
-| `profile_intensity` | `medium` | `low` / `medium` / `high` 调整风格表达，不能降低保真优先级 |
-| `palette_character` | `restrained` | 调整次要综合色，不能覆盖服装、毛色、车漆等身份识别色 |
+| `profile_intensity` | `high` | 默认强化手绘与平涂；调整强度不能降低保真优先级 |
+| `palette_character` | `cool-restrained` | 克制背景与暗部；保留服装、毛色、肤色、车漆与原片暖光 |
 | `surface_texture` | `subtle-analog` | `none` / `subtle-analog` / `moderate-analog`；介质纹理不能替代轮廓、平涂和阴影绘制 |
+| `delivery_long_edge` | `profile-default` → mature-ova 为 `540` | 显式正整数 / native 优先，其他 Profile 默认 native；保持比例、不放大、不裁切 |
+| `retain_native` | `true` | 原尺寸文件与交付文件分别保存，导出不覆盖原尺寸文件 |
+| `delivery_format` | `png` | 实际导出并核验尺寸，不能把提示词尺寸当作已实现 |
 
 显式选择其他 Profile 后，未指定控制采用该 Profile 的基底：例如现代风格为 `clear-bright` 配色和 `none` 表面纹理，Noir 为 `cool-restrained`，日常风格为 `warm-restrained`。默认 preset 不是用户显式覆盖；具体允许值及冲突处理见 [Profile Registry](references/cel-era-profiles.md)。
+
+### 固定输出方式与影响范围
+
+完整可复用提示词、模式适配和导出步骤见 [固定绘制与导出规范](references/mature-cel-render.md)。默认 mature-ova 下全部 14 个模式继承这套绘制/输出方法；城市、车辆最直接，建筑、工业、风景、室内主要改变环境绘画组织。人物/动作/宠物/静物/食物/微距采用线稿和平涂经济性，不把皮肤、食物、毛色或暖光室内整体染蓝。建筑样式、材质、时代改变仍需用户授权。
+
+2:3 输出 360×540，3:2 输出 540×360，方图输出 540×540；其他比例保留原比例，小于 540 的原尺寸不放大。保存 native 后再导出、核验宽高并显示交付图。macOS 生成 PNG 的导出命令：
+
+```bash
+python3 scripts/export_frame.py /absolute/native.png /absolute/delivery.png --max-edge 540
+```
+
+显式其他 Profile 保留自己的风格与原尺寸交付基底；多风格对照统一交付尺寸，避免像素密度混淆。Master Lock 保留已认可尺寸和其他区域。降低像素不能代替平涂、线稿与背景重绘，不能只套纹理或蓝色滤镜。
 
 **14 个主要场景模式（选择 1 个）：**
 
@@ -183,7 +198,7 @@ industrial-mecha-cel、clean-modern-cel。使用相同模型/编辑后端、输�
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-详细的五张街拍场景、其他模式组合、v0.2 的 P01–P06 对照和手动评估表见 [tests/scenarios.md](tests/scenarios.md)。P01–P03 固定摩托原图、模型、比例和保真条件；P04 长椅老人、P05 宠物、P06 都市。此次没有提供可确认的这些原图，图片验收为 **NOT RUN**；v0.1 两次错误拼贴的 **FAIL** 记录保留。测试照片及成品保持私有，不上传到公开仓库。
+详细场景与评估表见 [tests/scenarios.md](tests/scenarios.md)。原始 P01–P06 的历史 **NOT RUN** 状态与 v0.1 拼贴 **FAIL** 记录保留。本次摩托日景和城市夜景已生成并视觉检查，方向获用户认可，风格/保真仍有 **PARTIAL** 项；这是固定方法的实测依据，不是受控五风格对照或全模式图片验收。照片及成品保持私有，不上传到公开仓库。
 
 质量门分别报告 **Fidelity** 与 **Style Authenticity**。保真通过但仍是泛化现代数字插画，不能宣布 mature-ova 转换成功。文件结构测试验证指令契约，不证明模型遵循，也不证明五种风格已经达到预期艺术效果。
 

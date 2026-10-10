@@ -21,6 +21,8 @@ Planar building and cast shadows; characters get a clear base/shadow divide cons
 ## Background policy
 Simplify texture, keep signs and recognizable location structure without fabricating legible lettering.
 
+When mature-ova is selected, apply `references/mature-cel-render.md`: flat pedestrians with few garment folds, restrained gray-blue road/building shadow masses and opaque painted old-city surfaces where source-supported. At night retain existing localized sign/window colors, reduce repetitive bright details, keep dry roads dry. Real ages, crowd density, gestures and source light locations outrank paint simplification. Other profiles keep their baselines.
+
 ## Preservation guardrails
 People count, street position, gesture, sidewalk geometry, key urban details, cultural specificity.
 

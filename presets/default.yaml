@@ -9,6 +9,9 @@ typography: none
 output: single-frame
 revision_mode: new-concept
 cel_style_profile: mature-ova
-profile_intensity: medium
-palette_character: restrained
+profile_intensity: high
+palette_character: cool-restrained
 surface_texture: subtle-analog
+delivery_long_edge: profile-default
+retain_native: true
+delivery_format: png

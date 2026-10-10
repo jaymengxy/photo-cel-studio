@@ -21,6 +21,8 @@ Strong angular shadow plates and controlled metallic reflection shapes.
 ## Background policy
 Keep existing built environment recognizable; drawing simplification must not create impossible machinery.
 
+For mature-ova, apply `references/mature-cel-render.md` to group source-supported cool industrial shadow masses and painted setting planes, with sparse flat highlights and pressure-varied structural ink. Preserve connections/safety identity colors; technical geometry does not require uniform CAD strokes or microtexture. Other selected profiles retain their own baselines.
+
 ## Preservation guardrails
 Authentic connections, proportions and all identifiable industrial/human elements.
 

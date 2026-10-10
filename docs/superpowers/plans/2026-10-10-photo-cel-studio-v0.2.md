@@ -15,7 +15,7 @@
 - Exactly one Cel Style Profile, one primary Scene Mode, 0–2 compatible Atmosphere Profiles per frame.
 - Default `mature-ova`; auto style routing only on explicit `cel_style_profile: auto`.
 - Preserve all ten v0.1 defaults, 14 scene modes, six atmospheres, source preservation and master-lock.
-- New defaults: `profile_intensity: medium`, `palette_character: restrained`, `surface_texture: subtle-analog`.
+- Original defaults: medium / restrained / subtle-analog. The fixed-method refinement recorded below supersedes the mature baseline with high / cool-restrained / subtle-analog and separate delivery controls.
 - Do not publish source/generated images or claim unrun visual tests passed.
 - Work in the clean local checkout on `feat/photo-cel-studio-v0.2`; commit and push only this branch, without main merge, tag or Release.
 
@@ -75,6 +75,18 @@
 - Final clarification: quality-gate cardinality explicitly evaluates each requested comparison artifact separately, and analog finish is checked against the resolved surface control (subtle default or bounded explicit moderate), without changing preservation or drawing criteria.
 
 ## Delivery manifest
+
+### Fixed-method refinement execution record (2026-10-10)
+
+- [x] Inspect actual iterative motorcycle/city frames and user-approved treatment; record visual PARTIAL limitations independently of acceptance of direction.
+- [x] Read-only baseline across five subject/style requests confirms no fixed export size/procedure in original v0.2; unchanged 45-test suite PASS.
+- [x] Add fail-first contract/export tests; 49-test suite RED with five expected missing method/helper/default failures.
+- [x] Implement shared mature prompt blocks, mode-impact table, high/cool-restrained baseline, original-ratio 540 delivery/native retention, profile/master/comparison boundaries and export helper.
+- [x] Independent reviewer checks changed contracts and five retrieval scenarios; finds non-PNG conversion gap. Add JPEG-native test, observe expected RED, fix supported-format conversion without native overwrite.
+- [x] Full suite 50/50 PASS; independent focused re-review finds no remaining material issue. Quick validator PASS with isolated temporary PyYAML; 37 local Markdown links resolve. Real private motorcycle/city exports verify 360×540 / 540×360; no new images generated for skill tests.
+- [x] Synchronize 19 source/document/helper/test files into local development and installed v0.2 copies; checksums match, installed full suite 50/50 PASS, installed quick validator PASS, development git diff --check clean. Original changed files backed up outside the skill. Local-only update; no new public image upload, Git push, merge or release authorized by this refinement record.
+
+New resources: `references/mature-cel-render.md`, `scripts/export_frame.py`, `tests/test_export_frame.py`. Modified entry/default/profile/registry/prompt/QA plus urban/vehicle/architecture/industrial mode guidance; all 14 modes inherit only the selected mature profile. Existing five profiles, fourteen mode IDs and six atmosphere IDs retained. Other profile files and neutral shared grammar are unchanged. Low pixel count is not visual acceptance; formal controlled profile/image matrix remains NOT RUN where recorded.
 
 Modified:
 

@@ -1,6 +1,20 @@
 # Photo Cel Studio — Evaluation Scenarios
 
-**Status:** NOT RUN. This matrix defines RED (without skill) and GREEN (with skill) comparisons; never claim outputs exist until generated and reviewed. Source files remain private.
+**Status:** Original fixture matrix NOT RUN unless its row says otherwise. Current fixed-method evidence below is separate from the historical matrix. Never claim images exist until generated and reviewed. Source files remain private.
+
+## Fixed v0.2 method — actual evidence and routing cases
+
+Baseline observed in use: outputs retained overly precise digital lines, busy road texture, bright sky/background and insufficiently economical cel values; pixel reduction alone did not fix drawing. An independent current-skill retrieval pass across five described subjects found no required fixed pixel size or actual export procedure. These gaps motivate the fixed contract; retrieval does not prove image quality.
+
+| Case | Actual processing / expected behavior | Evidence status |
+| --- | --- | --- |
+| R01 | Motorcycle sunny street: gray-blue road/building masses, simplified rider/machine cel values, original sunny geometry, one portrait 360×540 PNG + native | GENERATED + VISUALLY INSPECTED; dimensions verified; user accepts direction; Fidelity PARTIAL / Style PARTIAL |
+| R02 | City night crossing: gray-blue painted setting, flat adult crowd, real station/train/light positions, dry road; one landscape 540×360 PNG + native | GENERATED + VISUALLY INSPECTED; dimensions verified; user accepts direction; Fidelity PARTIAL / Style PARTIAL |
+| R03 | Warm cafe / red scarf, mature default: warm lamps/identity red remain; flat figure/quiet background; original-ratio long edge 540 | Routing/brief-only check; IMAGE NOT RUN |
+| R04 | Explicit clean-modern macro flower: precise clear source hues, no aged grain, native baseline; no forced cool food/petal colors | Routing/brief-only check; IMAGE NOT RUN |
+| R05 | Mature/industrial/modern motorcycle comparison: original attached for every call, same backend/source/mode/light, common 540 delivery for all + natives | Routing/brief-only check; CONTROLLED IMAGE COMPARISON NOT RUN |
+
+R01/R02 are iterative private edits, not controlled repetitions, calibrated likeness tests or cross-profile experiments. Do not relabel the original P01–P06 rows as passed. All-mode artistic acceptance is NOT RUN. Check actual native and export, separate documentary drift from drawing/paint/finish, and never infer historical cel authenticity from pixel dimensions alone.
 
 ## Five street-photo fixtures
 
