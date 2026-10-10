@@ -2,7 +2,7 @@
 
 English | [简体中文](README.zh-CN.md)
 
-**Photograph → Preservation → Cel Style Profile → Scene Mode → Atmosphere → Redraw → Independent Quality Gates → Verified Export.** The v0.2 default, `mature-ova`, uses pronounced hand-drawn line-weight variation, flat character colors with economical folds, restrained blue-gray backgrounds, broad cool shadow masses, and painted architecture, signs, and skies. The source photograph determines spatial relationships and lighting; identity colors and localized warm light remain intact. Default delivery is an original-aspect **PNG with a 540-pixel long edge**, with the native-resolution generated file retained separately.
+**Photograph → Preservation → Cel Style Profile → Scene Mode → Atmosphere → Redraw → Independent Quality Gates → Verified Export.** The v0.2 default, `mature-ova`, uses pronounced hand-drawn line-weight variation, flat character colors with economical folds, restrained source-derived background colors and broad form-shadow masses, and painted architecture, signs, and skies. The source photograph determines spatial relationships and lighting; identity colors and localized warm light remain intact. Default delivery is an original-aspect **PNG with a 540-pixel long edge**, with the native-resolution generated file retained separately.
 
 This project is a **visual creation Skill** for Codex and other Agent Skills environments. It provides art direction and editing instructions rather than an image-processing algorithm, filter, LUT, or standalone generation model. Producing images requires an **available reference-image editing or generation tool**.
 
@@ -88,7 +88,7 @@ keep the people, composition, colors, lighting, and all other elements unchanged
 
 | ID | Observable drawing differences |
 | --- | --- |
-| `mature-ova` (default) | Pronounced hand-drawn contour hierarchy, character base color plus one coherent shadow mass, sparse folds/reflections, blue-gray backgrounds and cool shadow groups, traditionally painted settings; 540-pixel-long-edge PNG plus native file |
+| `mature-ova` (default) | Pronounced hand-drawn contour hierarchy, character base color plus one coherent shadow mass, sparse folds/reflections, restrained source-derived color groups and traditionally painted settings; 540-pixel-long-edge PNG plus native file |
 | `clean-modern-cel` | More precise, regular contours, clearer/brighter source color groups, clean flat-color boundaries, no simulated grain by default; credible mature proportions |
 | `urban-noir-cel` | Cooler secondary colors, stronger source-supported value contrast, heavier silhouettes and selective dark merges; daytime remains daytime |
 | `industrial-mecha-cel` | Clearer mechanical connections, wheel/fork/engine perspective, weight-bearing volumes and metal planes; real vehicles remain real vehicles |
@@ -140,12 +140,14 @@ The ten v0.1 fields remain available. Additional style and delivery controls are
 | Field | Default | Effect and boundary |
 | --- | --- | --- |
 | `cel_style_profile` | `mature-ova` | One registered ID or explicit `auto` |
-| `profile_intensity` | `high` | Emphasizes hand-drawn contours and flat shading; intensity never reduces preservation priority |
-| `palette_character` | `cool-restrained` | Restrains background and shadow groups while preserving clothing, coat, skin, vehicle paint, and original warm light |
+| `profile_intensity` | `medium` | Keeps readable hand-drawn contours and flat shading; intensity never reduces preservation priority |
+| `palette_character` | `restrained` | Restrains source-derived background and shadow groups while preserving clothing, coat, skin, vehicle paint, and original warm light |
 | `surface_texture` | `subtle-analog` | `none` / `subtle-analog` / `moderate-analog`; texture cannot substitute for contours, flat plates, or shadow drawing |
 | `delivery_long_edge` | `profile-default` → `540` for mature-ova | Explicit positive integer or `native` takes precedence; other Profiles default to native delivery; preserve aspect ratio without upscaling or cropping |
 | `retain_native` | `true` | Save native and delivery files separately; export must not overwrite the native file |
 | `delivery_format` | `png` | Actually export and verify dimensions; prompt dimensions alone do not establish delivery size |
+
+The mature default is `medium / restrained / subtle-analog`. Set `profile_intensity: high` and/or `palette_character: cool-restrained` explicitly for stronger/cooler treatment; subject routing never enables these overrides. Identity colors, source light and Master Lock remain protected.
 
 When another Profile is explicitly selected, omitted controls use that Profile's baseline. For example, clean-modern uses `clear-bright` and `none` for surface texture; noir uses `cool-restrained`; warm-daily uses `warm-restrained`. Preset defaults are not explicit user overrides. See the [Profile Registry](references/cel-era-profiles.md) for allowed values and conflict handling.
 

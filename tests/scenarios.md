@@ -136,3 +136,11 @@ Each run records separate Fidelity and Style verdicts with observed evidence. Fi
 ### Requirements to run the image matrix
 
 Provide or identify the exact private motorcycle original for P01–P03, bench elder original for P04, pet photo for P05 and city-street photo for P06, plus the v0.1 motorcycle output for historical comparison. Use a reference-image editing tool with controllable model/version and ratio; inspect each returned image against its original. No repository upload is needed. Generation and visual QA have not been performed by the v0.2 structural suite.
+
+## Current v0.2 request reconciliation — 2026-10-10
+
+This execution reuses the existing feature branch and restores omitted mature controls to **medium / restrained / subtle-analog**. High/cool remains available through explicit overrides; existing native-retained export behavior remains. No images were generated for this reconciliation, and no private originals or generated frames were uploaded.
+
+A read-only independent consumer check of the pre-change skill resolved mature-ova + vehicle-mechanical, zero provisional atmospheres, but high/cool-restrained controls. The exact original was unavailable, so the draft explicitly treated the motorcycle description as a caption, not observed image evidence. Structural RED: 52 tests, four expected default-consistency failures, no errors. These checks address routing/configuration, not artwork.
+
+P01–P06 remain **NOT RUN** for this execution: no exact motorcycle, bench, pet or city originals were supplied or identified in the repository. The historical R01/R02 partial results and V01/V02 failures above are preserved and were not rerun. To run image acceptance, identify the private original for each case and the v0.1 motorcycle result, then use the same reference-image model/version, ratio, fidelity constraints and common export size for P01–P03. Image-edit capability is available; source availability is the missing prerequisite. A generated substitute cannot satisfy this matrix.

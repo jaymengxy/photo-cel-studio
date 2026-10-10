@@ -1,6 +1,8 @@
 # Photo Cel Studio v0.2 — Mature Cel-Era Style Profiles
 
-**Authority:** owner's supplied v0.2 requirements and explicit instruction to implement, commit and push. No additional design approval is needed. This extends the approved v0.1 design; it does not replace its preservation, modes, atmospheres or master-lock contracts.
+**Current authority (2026-10-10 request reconciliation):** the supplied Mature Cel-Era Style Profiles task requires medium / restrained / subtle-analog defaults. The owner's subsequent “一起合并吧” authorizes committing/pushing the combined local changes and merging v0.2 into main; no tag, Release, installed-skill sync or media upload is included. The fixed-method high/cool baseline below is historical and now explicit-only; its drawing and export capabilities remain. See the current [alignment plan](../plans/2026-10-10-photo-cel-studio-v0.2-request-alignment.md).
+
+**Historical authority:** owner's earlier v0.2 instruction to implement, commit and push. No additional design approval is needed. This extends the approved v0.1 design; it does not replace its preservation, modes, atmospheres or master-lock contracts.
 
 ## Intent
 
@@ -30,7 +32,7 @@ Every profile follows `templates/profile-template.md`, including ID, use, intent
 
 ## Controls and prompt
 
-Retain the ten v0.1 defaults. Original v0.2 controls were mature-ova / medium / restrained / subtle-analog; the user-approved fixed-method refinement below supersedes those defaults. Resolve profile-specific baseline first so choosing clean-modern actually produces a modern comparison despite global defaults. Explicit controls cannot defeat defining profile traits or preservation.
+Retain the ten v0.1 defaults. Original v0.2 controls were mature-ova / medium / restrained / subtle-analog; the historical fixed-method refinement below used high/cool controls. The current task restores medium/restrained as the default, retaining high/cool as explicit options. Resolve profile-specific baseline first so choosing clean-modern actually produces a modern comparison despite global defaults. Explicit controls cannot defeat defining profile traits or preservation.
 
 Use six prompt sections: Source Description; Preservation Contract; Shared Cel Grammar; Selected Cel Style Profile; Selected Scene Mode + Atmosphere; Composition / Background / Negative Constraints. Translate adjectives into executable contours, paint planes, hue roles and bounded texture. Use the actual reference image, never reconstruct it from caption alone.
 
@@ -40,7 +42,7 @@ Same-photo multi-profile comparison is an explicit request for multiple independ
 
 ### Fixed-method refinement within v0.2
 
-Mature baseline: high / cool-restrained / subtle-analog. Foregrounds use opaque base plus one connected shadow, few folds/metal highlights and visibly pressure-varied ink. Backgrounds use restrained gray-blue/cool dark masses and opaque painted building/sign/sky/road passages. Source light, warm accents, identity colors and weather stay intact; facade redesign/aging needs source evidence or explicit authorization. All 14 modes inherit selected-profile craft, with direct city/vehicle/built-setting rules and source-specific treatment for other subjects. No new profile/mode/atmosphere.
+Historical mature baseline: high / cool-restrained / subtle-analog; current baseline: medium / restrained / subtle-analog. Foregrounds use opaque base plus one connected shadow, few folds/metal highlights and visibly pressure-varied ink. Backgrounds use restrained gray-blue/cool dark masses and opaque painted building/sign/sky/road passages. Source light, warm accents, identity colors and weather stay intact; facade redesign/aging needs source evidence or explicit authorization. All 14 modes inherit selected-profile craft, with direct city/vehicle/built-setting rules and source-specific treatment for other subjects. No new profile/mode/atmosphere.
 
 `references/mature-cel-render.md` owns prompt blocks, mode scope and export. Add delivery_long_edge profile-default, retain_native true, delivery_format png. Mature resolves to original-ratio long edge 540 with no upscale/crop; other profiles resolve native unless overridden. Master-lock keeps accepted size; comparisons use one common size. Save native, actually export, verify dimensions and inspect delivery. The macOS PNG helper tests real portrait/landscape/square/native/small/override exports, not art-quality claims. Existing P01–P06 states remain, with separate current-method evidence. This refinement updates local v0.2 source and installed skill; historical push authority in the original design is not renewed by this section.
 
@@ -48,4 +50,4 @@ Mature baseline: high / cool-restrained / subtle-analog. Foregrounds use opaque 
 - Fail-first tests cover default, registry/files/schema/extension, exactly-one/on-demand selection, preservation precedence, layer independence, vehicle recommendation and unchanged v0.1 registration; additional contracts cover prompt order, profile differentiation, controls, comparison and independent style gates.
 - P01/P02/P03 compare the same motorcycle source in mature, industrial and modern styles. P04 bench elder, P05 pet, P06 urban street. All remain NOT RUN until actual reference edits and visual review occur; no invented substitute fixtures.
 - Independent review checks user-visible routing and prompt behavior as well as changed files. Fix important defects before committing/pushing. Report structural and visual evidence separately.
-- Branch `feat/photo-cel-studio-v0.2` starts at latest unmerged v0.1 `848f0b0ca57423e29538cbb0c6c55f148c86a4f1`. Push this branch as explicitly authorized in the owner's latest message; do not merge main, tag, release, or publish private media.
+- Branch `feat/photo-cel-studio-v0.2` starts at latest unmerged v0.1 `848f0b0ca57423e29538cbb0c6c55f148c86a4f1`. The owner's latest confirmation authorizes combined-change publication and main integration after validation. Do not tag, release, synchronize the installed skill, or publish private media.

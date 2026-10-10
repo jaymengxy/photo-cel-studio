@@ -9,7 +9,7 @@ Unspecified style for any real photo, or an explicit request for mature traditio
 ## Visual intent
 A believable mature hand-drawn 1980s–1990s OVA / theatrical-animation frame. Build the era character through ink hierarchy, color organization, sculpted paint planes and background craft before adding medium texture. Extract general drawing principles, not a particular property's characters or shots.
 
-The fixed v0.2 default is **high / cool-restrained / subtle-analog**, flat foreground cels over opaque painted backgrounds, delivered at long edge 540 with native retained. Read [references/mature-cel-render.md](../references/mature-cel-render.md) for the executable prompt blocks, mode scope and export procedure whenever this profile is selected. User controls and master-lock still take priority.
+The fixed v0.2 default is **medium / restrained / subtle-analog**, flat foreground cels over opaque painted backgrounds, delivered at long edge 540 with native retained. Read [references/mature-cel-render.md](../references/mature-cel-render.md) for the executable prompt blocks, mode scope and export procedure whenever this profile is selected. User controls and master-lock still take priority. Explicit `profile_intensity: high` can emphasize hand-pressure changes more strongly without changing source geometry or identity; neither vehicles nor a mature-era label selects it automatically.
 
 ## Linework
 - Give body/vehicle silhouettes weight; use finer lines for facial structure, garment folds, fasteners and distant architecture.
@@ -17,7 +17,7 @@ The fixed v0.2 default is **high / cool-restrained / subtle-analog**, flat foreg
 - Draw closed, intentionally shaped forms. Do not blacken every photographic edge, trace asphalt grain or impose absolutely uniform vector strokes.
 
 ## Color palette
-- Organize secondary roads, sky, walls and supported shadows into large connected restrained gray-blue/cool dark paint masses, with source-supported warm light planes and local accents. This is value/paint design, not an all-over blue filter; warm interiors, food, skin and identity hues keep their source color roles.
+- Organize secondary roads, sky, walls and supported shadows into large connected restrained source-derived paint masses, with source-supported warm light planes and local accents. Use gray-blue/cool dark grouping where compatible with the source or an explicit `palette_character: cool-restrained` override; do not make every setting cool by default. This is value/paint design, not an all-over blue filter; warm interiors, food, skin and identity hues keep their source color roles.
 - Keep identity colors recognizable: a yellow shirt and orange truck can stay prominent against quieter blue-gray road and building planes. Do not blanket-desaturate skin, coat markings or vehicle paint.
 - Preserve daylight and original exposure relationships. Avoid a sparkling bright blue sky plus candy-green foliage treatment that makes an ordinary street a tourism-poster.
 

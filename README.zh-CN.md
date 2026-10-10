@@ -2,7 +2,7 @@
 
 [English](README.md) | 简体中文
 
-**摄影瞬间 → 保真 → Cel Style Profile → Scene Mode → Atmosphere → 重绘 → 独立质量门 → 验证导出。** v0.2 默认 `mature-ova` 固定为更明显的手绘粗细变化、人物平涂与简练衣褶、克制的灰蓝背景和大面积冷色暗部、建筑/招牌/天空的绘画质感。原图决定场景关系与光线；保留身份色和局部暖光。默认交付长边 **540 像素** 的原比例 PNG，同时保留生成原尺寸文件。
+**摄影瞬间 → 保真 → Cel Style Profile → Scene Mode → Atmosphere → 重绘 → 独立质量门 → 验证导出。** v0.2 默认 `mature-ova` 固定为更明显的手绘粗细变化、人物平涂与简练衣褶、克制的源图综合色背景和有体积的大块暗部（灰蓝处理需符合原片或显式选择）、建筑/招牌/天空的绘画质感。原图决定场景关系与光线；保留身份色和局部暖光。默认交付长边 **540 像素** 的原比例 PNG，同时保留生成原尺寸文件。
 
 这个项目是一个供 Codex 等支持 Agent Skills 的环境读取的**视觉创作 Skill**，不是图片处理算法、滤镜、LUT 或独立图像生成模型。它必须配合一个**可用的图像编辑或生成工具**，才能真正输出图片。
 
@@ -82,7 +82,7 @@ git clone -b design/photo-cel-studio-v0.1 git@github.com:jaymengxy/photo-cel-stu
 
 | ID | 可观察的绘制差异 |
 | --- | --- |
-| `mature-ova`（默认） | 明显手绘线条层次、人物 base + 一块连贯阴影、少量衣褶/反光、灰蓝背景与冷色暗部、传统绘画背景；长边 540 PNG + 原尺寸文件 |
+| `mature-ova`（默认） | 明显手绘线条层次、人物 base + 一块连贯阴影、少量衣褶/反光、克制的源图综合色与传统绘画背景；长边 540 PNG + 原尺寸文件 |
 | `clean-modern-cel` | 更精确规律的线条、清晰明亮的源图色组、整洁的平涂边缘、默认无模拟颗粒；保留成熟比例 |
 | `urban-noir-cel` | 冷峻的次要色组、源光支持的更强明暗对比、较重轮廓和局部暗部融合；白天仍然是白天 |
 | `industrial-mecha-cel` | 机械连接、轮胎/前叉/发动机透视、负重体块和金属分面更明确；真实车辆不会变成机甲 |
@@ -132,12 +132,14 @@ industrial-mecha-cel、clean-modern-cel。使用相同模型/编辑后端、输�
 | 字段 | 默认 | 意义与边界 |
 | --- | --- | --- |
 | `cel_style_profile` | `mature-ova` | 一个已注册 ID 或显式 `auto` |
-| `profile_intensity` | `high` | 默认强化手绘与平涂；调整强度不能降低保真优先级 |
-| `palette_character` | `cool-restrained` | 克制背景与暗部；保留服装、毛色、肤色、车漆与原片暖光 |
+| `profile_intensity` | `medium` | 默认保留清晰的手绘层次与平涂；调整强度不能降低保真优先级 |
+| `palette_character` | `restrained` | 克制源图综合色的背景与暗部；保留服装、毛色、肤色、车漆与原片暖光 |
 | `surface_texture` | `subtle-analog` | `none` / `subtle-analog` / `moderate-analog`；介质纹理不能替代轮廓、平涂和阴影绘制 |
 | `delivery_long_edge` | `profile-default` → mature-ova 为 `540` | 显式正整数 / native 优先，其他 Profile 默认 native；保持比例、不放大、不裁切 |
 | `retain_native` | `true` | 原尺寸文件与交付文件分别保存，导出不覆盖原尺寸文件 |
 | `delivery_format` | `png` | 实际导出并核验尺寸，不能把提示词尺寸当作已实现 |
+
+当前成熟默认为 `medium / restrained / subtle-analog`。需要更强手绘或更冷的次要色组时，可显式设置 `profile_intensity: high`、`palette_character: cool-restrained`；题材识别不会自动选择这两个覆盖值，识别色、原片光源和 Master Lock 仍优先。
 
 显式选择其他 Profile 后，未指定控制采用该 Profile 的基底：例如现代风格为 `clear-bright` 配色和 `none` 表面纹理，Noir 为 `cool-restrained`，日常风格为 `warm-restrained`。默认 preset 不是用户显式覆盖；具体允许值及冲突处理见 [Profile Registry](references/cel-era-profiles.md)。
 

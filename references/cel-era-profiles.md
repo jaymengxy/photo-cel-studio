@@ -36,11 +36,13 @@ The pairings are recommendations, not a closed allowlist. All registered modes c
 
 | Selected profile | Intensity baseline | Palette baseline | Surface baseline | Delivery long edge |
 | --- | --- | --- | --- | --- |
-| mature-ova | high | cool-restrained | subtle-analog | 540 |
+| mature-ova | medium | restrained | subtle-analog | 540 |
 | clean-modern-cel | medium | clear-bright | none | native |
 | urban-noir-cel | medium | cool-restrained | subtle-analog | native |
 | industrial-mecha-cel | medium | restrained | subtle-analog | native |
 | warm-daily-ova | medium | warm-restrained | subtle-analog | native |
+
+The mature default is medium / restrained / subtle-analog. Stronger pressure emphasis with `profile_intensity: high` and cooler secondary grouping with `palette_character: cool-restrained` are explicit user overrides, not automatic choices for motorcycles or city scenes. Restrained means quieter source-derived secondary hues; it does not require a blue cast.
 
 The fixed mature method is defined in `references/mature-cel-render.md`, loaded through `profiles/mature-ova.md`. It affects all modes using this selected profile; gray-blue is a secondary-background/shadow strategy, not permission to blue-tint warm sources, identity hues or all subjects. Other profiles keep their defining traits and native baseline. Delivery density is not evidence of cel authenticity.
 

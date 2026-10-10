@@ -1,6 +1,8 @@
 # Photo Cel Studio v0.2 Implementation Plan
 
-> **For agentic workers:** Use superpowers:executing-plans for native implementation; superpowers:test-driven-development governs the contract cycle. Use an independent reviewer at completion. The owner explicitly requested direct implementation and remote push.
+> **Current request override:** Use medium / restrained / subtle-analog defaults; high/cool remains an explicit option. The execution records below are historical. The owner's latest “一起合并吧” authorizes committing/pushing the combined changes and merging v0.2 into main; see [the current alignment plan](2026-10-10-photo-cel-studio-v0.2-request-alignment.md). No tag, Release, installed-skill sync or media upload is included.
+
+> **For the original execution:** Use superpowers:executing-plans for native implementation; superpowers:test-driven-development governs the contract cycle. Use an independent reviewer at completion. The owner explicitly requested direct implementation and remote push.
 
 **Goal:** Add five executable cel drawing profiles with mature-ova as the default while retaining the v0.1 documentary core.
 
@@ -15,7 +17,7 @@
 - Exactly one Cel Style Profile, one primary Scene Mode, 0–2 compatible Atmosphere Profiles per frame.
 - Default `mature-ova`; auto style routing only on explicit `cel_style_profile: auto`.
 - Preserve all ten v0.1 defaults, 14 scene modes, six atmospheres, source preservation and master-lock.
-- Original defaults: medium / restrained / subtle-analog. The fixed-method refinement recorded below supersedes the mature baseline with high / cool-restrained / subtle-analog and separate delivery controls.
+- Original defaults: medium / restrained / subtle-analog. The historical fixed-method refinement used high / cool-restrained / subtle-analog. The current request restores medium / restrained / subtle-analog while retaining separate delivery controls.
 - Do not publish source/generated images or claim unrun visual tests passed.
 - Work in the clean local checkout on `feat/photo-cel-studio-v0.2`; commit and push only this branch, without main merge, tag or Release.
 

@@ -63,7 +63,7 @@ Keep fidelity/line/palette/shadow/background/finish observations distinct in the
 
 ## Fixed mature-method checks
 
-For mature-ova, inspect the observable contract in `references/mature-cel-render.md`: pressure changes visible at delivery density; sparse structural ink; skin/clothes with opaque base plus one connected shadow; large source-supported cool background masses; opaque painted building/sign/sky/road edges; local warm/identity colors intact. A uniform blue filter, identical fine noise across sky/road/walls, technical vector precision or lower pixel count alone cannot pass the style gate. Daylight remains daylight; source-clear sky and dry roads stay so. Preserve source/user-authorized geometry, not copied style-reference content.
+For mature-ova, inspect the observable contract in `references/mature-cel-render.md`: pressure changes visible at delivery density; sparse structural ink; skin/clothes with opaque base plus one connected shadow; large restrained source-derived background masses (cool only when supported or explicitly selected); opaque painted building/sign/sky/road edges; local warm/identity colors intact. A uniform blue filter, identical fine noise across sky/road/walls, technical vector precision or lower pixel count alone cannot pass the style gate. Daylight remains daylight; source-clear sky and dry roads stay so. Preserve source/user-authorized geometry, not copied style-reference content.
 
 ## Delivery Gate
 

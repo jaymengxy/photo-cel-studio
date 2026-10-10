@@ -32,8 +32,8 @@ DEFAULTS = {
     "output": "single-frame",
     "revision_mode": "new-concept",
     "cel_style_profile": "mature-ova",
-    "profile_intensity": "high",
-    "palette_character": "cool-restrained",
+    "profile_intensity": "medium",
+    "palette_character": "restrained",
     "surface_texture": "subtle-analog",
     "delivery_long_edge": "profile-default",
     "retain_native": "true",
@@ -79,10 +79,30 @@ class SkillContractTests(unittest.TestCase):
         for token in ("540", "native", "gray-blue", "one connected shadow", "daylight", "master-lock"):
             self.assertIn(token, method.lower())
         registry = read("references/cel-era-profiles.md")
-        self.assertRegex(registry, r"(?m)^\| mature-ova \| high \| cool-restrained \| subtle-analog \| 540 \|$")
+        self.assertRegex(registry, r"(?m)^\| mature-ova \| medium \| restrained \| subtle-analog \| 540 \|$")
         self.assertRegex(registry, r"(?m)^\| clean-modern-cel \| medium \| clear-bright \| none \| native \|$")
         self.assertIn("delivery_long_edge", read("references/prompt-construction.md"))
         self.assertIn("Delivery Gate", read("references/quality-gates.md"))
+
+    def test_mature_baseline_documents_requested_controls(self):
+        # Catch a consumer receiving the old high/cool baseline from a profile
+        # or linked render guide despite the requested default preset.
+        profile = read("profiles/mature-ova.md")
+        self.assertIn("**medium / restrained / subtle-analog**", profile)
+        method = read("references/mature-cel-render.md").lower()
+        self.assertIn("resolve medium intensity, restrained secondary palette", method)
+        for filename in ("README.md", "README.zh-CN.md"):
+            with self.subTest(filename=filename):
+                readme = read(filename)
+                self.assertRegex(readme, r"(?m)^\| `profile_intensity` \| `medium` \|")
+                self.assertRegex(readme, r"(?m)^\| `palette_character` \| `restrained` \|")
+
+    def test_mature_prompt_example_uses_requested_defaults(self):
+        # The default example is directly reusable by a consuming agent.
+        # It must not reintroduce stronger/cooler controls silently.
+        prompt = read("references/prompt-construction.md")
+        example = prompt.split("## Example brief", 1)[1].split("## Variation", 1)[0]
+        self.assertIn("`mature-ova`, medium intensity, restrained secondary palette", example)
 
     def test_ci_covers_v02_development_branch(self):
         workflow = read(".github/workflows/validate-skill.yml")
